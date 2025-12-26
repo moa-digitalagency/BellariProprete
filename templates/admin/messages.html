@@ -32,13 +32,17 @@
                     </div>
                     <div class="flex items-center space-x-2 ml-4">
                         {% if not message.is_read %}
-                        <a href="{{ url_for('mark_message_read', id=message.id) }}" class="px-4 py-2 bg-green-100 text-green-600 rounded-lg hover:bg-green-200 transition text-sm">
-                            <i class="fas fa-check mr-1"></i> Lu
-                        </a>
+                        <form action="{{ url_for('mark_message_read', id=message.id) }}" method="POST" class="inline">
+                            <button type="submit" class="px-4 py-2 bg-green-100 text-green-600 rounded-lg hover:bg-green-200 transition text-sm">
+                                <i class="fas fa-check mr-1"></i> Lu
+                            </button>
+                        </form>
                         {% endif %}
-                        <a href="{{ url_for('delete_message', id=message.id) }}" class="px-4 py-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition text-sm" onclick="return confirm('Supprimer ce message ?')">
-                            <i class="fas fa-trash"></i>
-                        </a>
+                        <form action="{{ url_for('delete_message', id=message.id) }}" method="POST" class="inline" onsubmit="return confirm('Supprimer ce message ?')">
+                            <button type="submit" class="px-4 py-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition text-sm">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>

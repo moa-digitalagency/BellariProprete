@@ -69,6 +69,13 @@ def get_settings():
         db.session.commit()
     return settings
 
+@app.context_processor
+def inject_settings():
+    try:
+        return {'settings': get_settings()}
+    except:
+        return {'settings': None}
+
 @app.route('/')
 def index():
     services = Service.query.order_by(Service.order).all()
@@ -141,7 +148,7 @@ def admin_messages():
     messages = ContactMessage.query.order_by(ContactMessage.created_at.desc()).all()
     return render_template('admin/messages.html', messages=messages)
 
-@app.route('/admin/messages/<int:id>/read')
+@app.route('/admin/messages/<int:id>/read', methods=['POST'])
 @login_required
 def mark_message_read(id):
     message = ContactMessage.query.get_or_404(id)
@@ -149,7 +156,7 @@ def mark_message_read(id):
     db.session.commit()
     return redirect(url_for('admin_messages'))
 
-@app.route('/admin/messages/<int:id>/delete')
+@app.route('/admin/messages/<int:id>/delete', methods=['POST'])
 @login_required
 def delete_message(id):
     message = ContactMessage.query.get_or_404(id)
@@ -197,7 +204,7 @@ def edit_service(id):
     
     return render_template('admin/service_form.html', service=service)
 
-@app.route('/admin/services/<int:id>/delete')
+@app.route('/admin/services/<int:id>/delete', methods=['POST'])
 @login_required
 def delete_service(id):
     service = Service.query.get_or_404(id)
@@ -243,7 +250,7 @@ def edit_testimonial(id):
     
     return render_template('admin/testimonial_form.html', testimonial=testimonial)
 
-@app.route('/admin/testimonials/<int:id>/delete')
+@app.route('/admin/testimonials/<int:id>/delete', methods=['POST'])
 @login_required
 def delete_testimonial(id):
     testimonial = Testimonial.query.get_or_404(id)
