@@ -19,52 +19,54 @@
 </section>
 
 <!-- ZONE D'INTERVENTION -->
-<section class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-6">
-        <div class="grid md:grid-cols-2 gap-12 items-center">
-            <div class="bg-gradient-to-br from-accent/10 to-primary/5 rounded-3xl p-6 h-80 flex items-center justify-center relative overflow-hidden">
+<section class="py-12 sm:py-16 lg:py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            <div class="bg-gradient-to-br from-accent/10 to-primary/5 rounded-2xl sm:rounded-3xl p-6 h-56 sm:h-72 lg:h-80 flex items-center justify-center relative overflow-hidden order-2 lg:order-1">
                 <div class="text-center relative z-10">
-                    <i class="fas fa-map-marker-alt text-accent text-6xl mb-4"></i>
-                    <p class="text-primary font-bold text-xl">Marrakech</p>
-                    <p class="text-gray-600">et ses environs</p>
+                    <i class="fas fa-map-marker-alt text-accent text-4xl sm:text-5xl lg:text-6xl mb-3 sm:mb-4"></i>
+                    <p class="text-primary font-bold text-lg sm:text-xl">Marrakech</p>
+                    <p class="text-gray-600 text-sm sm:text-base">et ses environs</p>
                 </div>
             </div>
-            <div>
-                <h2 class="text-3xl md:text-4xl font-bold text-primary mb-6">Zone d'Intervention à Marrakech</h2>
-                <p class="text-gray-600 mb-6 leading-relaxed">Bellari Propreté Services intervient à Marrakech et dans toute sa région. Notre équipe locale se déplace rapidement pour vous offrir un service de nettoyage professionnel de qualité.</p>
-                <ul class="space-y-3 mb-8">
-                    <li class="flex items-center gap-3"><i class="fas fa-check-circle text-accent"></i> <span>Intervention rapide sous 24h</span></li>
-                    <li class="flex items-center gap-3"><i class="fas fa-check-circle text-accent"></i> <span>Équipe locale à Marrakech</span></li>
-                    <li class="flex items-center gap-3"><i class="fas fa-check-circle text-accent"></i> <span>Devis gratuit sur place</span></li>
+            <div class="order-1 lg:order-2 text-center lg:text-left">
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary mb-4 sm:mb-6">Zone d'Intervention à Marrakech</h2>
+                <p class="text-gray-600 mb-4 sm:mb-6 leading-relaxed text-sm sm:text-base">Bellari Propreté Services intervient à Marrakech et dans toute sa région. Notre équipe locale se déplace rapidement pour vous offrir un service de nettoyage professionnel de qualité.</p>
+                <ul class="space-y-2 sm:space-y-3 mb-6 sm:mb-8 inline-block text-left">
+                    <li class="flex items-center gap-2 sm:gap-3 text-sm sm:text-base"><i class="fas fa-check-circle text-accent"></i> <span>Intervention rapide sous 24h</span></li>
+                    <li class="flex items-center gap-2 sm:gap-3 text-sm sm:text-base"><i class="fas fa-check-circle text-accent"></i> <span>Équipe locale à Marrakech</span></li>
+                    <li class="flex items-center gap-2 sm:gap-3 text-sm sm:text-base"><i class="fas fa-check-circle text-accent"></i> <span>Devis gratuit sur place</span></li>
                 </ul>
-                <a href="{{ url_for('devis') }}" class="text-primary font-semibold hover:underline inline-flex items-center gap-2">
-                    Demander un devis <i class="fas fa-arrow-right"></i>
-                </a>
+                <div>
+                    <a href="{{ url_for('devis') }}" class="text-primary font-semibold hover:underline inline-flex items-center gap-2 text-sm sm:text-base">
+                        Demander un devis <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
 <!-- NOS SERVICES -->
-<section class="py-20 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-6">
-        <div class="flex items-center gap-4 mb-12">
-            <div class="flex-1 h-px bg-gray-300"></div>
-            <h2 class="text-3xl md:text-4xl font-bold text-primary">Nos Services de Nettoyage</h2>
-            <div class="flex-1 h-px bg-gray-300"></div>
+<section class="py-12 sm:py-16 lg:py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 mb-8 sm:mb-12">
+            <div class="hidden sm:block flex-1 h-px bg-gray-300"></div>
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary text-center">Nos Services de Nettoyage</h2>
+            <div class="hidden sm:block flex-1 h-px bg-gray-300"></div>
         </div>
         
-        <div class="grid md:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
             {% set service_images = ['construction_site_cleaning.png', 'clean_apartment_interior.png', 'clean_office_space.png'] %}
             {% for service in featured_services[:3] %}
             <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all group">
-                <div class="h-52 overflow-hidden">
+                <div class="h-48 sm:h-52 overflow-hidden">
                     <img src="{{ url_for('static', filename='images/' + service_images[loop.index0]) }}" alt="{{ service.title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                 </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-primary mb-3">{{ service.title }}</h3>
-                    <p class="text-gray-600 text-sm mb-4">{{ service.description[:90] }}...</p>
-                    <a href="{{ url_for('service_detail', id=service.id) }}" class="text-primary font-semibold hover:underline">En savoir plus →</a>
+                <div class="p-5 sm:p-6">
+                    <h3 class="text-lg sm:text-xl font-bold text-primary mb-2 sm:mb-3">{{ service.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-3 sm:mb-4">{{ service.description[:90] }}...</p>
+                    <a href="{{ url_for('service_detail', id=service.id) }}" class="text-primary font-semibold hover:underline text-sm sm:text-base">En savoir plus →</a>
                 </div>
             </div>
             {% endfor %}
@@ -73,73 +75,81 @@
 </section>
 
 <!-- SECTION COLLAGE IMAGES + TEXTE -->
-<section class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-6">
-        <div class="grid md:grid-cols-2 gap-12 items-center">
-            <div class="grid grid-cols-12 grid-rows-6 gap-3 h-[450px]">
-                <div class="col-span-7 row-span-4 rounded-2xl overflow-hidden">
+<section class="py-12 sm:py-16 lg:py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            <div class="hidden sm:grid grid-cols-12 grid-rows-6 gap-2 sm:gap-3 h-[300px] sm:h-[400px] lg:h-[450px]">
+                <div class="col-span-7 row-span-4 rounded-xl sm:rounded-2xl overflow-hidden">
                     <img src="{{ url_for('static', filename='images/construction_site_cleaning.png') }}" alt="" class="w-full h-full object-cover">
                 </div>
-                <div class="col-span-5 row-span-3 rounded-2xl overflow-hidden">
+                <div class="col-span-5 row-span-3 rounded-xl sm:rounded-2xl overflow-hidden">
                     <img src="{{ url_for('static', filename='images/clean_apartment_interior.png') }}" alt="" class="w-full h-full object-cover">
                 </div>
-                <div class="col-span-5 row-span-3 rounded-2xl overflow-hidden">
+                <div class="col-span-5 row-span-3 rounded-xl sm:rounded-2xl overflow-hidden">
                     <img src="{{ url_for('static', filename='images/clean_office_space.png') }}" alt="" class="w-full h-full object-cover">
                 </div>
-                <div class="col-span-7 row-span-2 rounded-2xl overflow-hidden">
+                <div class="col-span-7 row-span-2 rounded-xl sm:rounded-2xl overflow-hidden">
                     <img src="{{ url_for('static', filename='images/clean_event_venue.png') }}" alt="" class="w-full h-full object-cover">
                 </div>
             </div>
-            <div>
-                <h2 class="text-3xl md:text-4xl font-bold text-primary mb-6">Le Nettoyage Professionnel<br>Fait Correctement</h2>
-                <p class="text-gray-600 mb-4 leading-relaxed">Chez Bellari, nous comprenons que chaque espace est unique. C'est pourquoi nous offrons des solutions de nettoyage sur mesure qui répondent à vos besoins spécifiques.</p>
-                <p class="text-gray-600 mb-8 leading-relaxed">Notre équipe utilise des équipements professionnels et des produits écologiques pour garantir des résultats impeccables tout en préservant l'environnement.</p>
-                <a href="{{ url_for('devis') }}" class="bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-full font-semibold shadow-lg transition-all inline-block">Demander un Devis</a>
+            <div class="grid grid-cols-2 gap-3 sm:hidden h-[200px]">
+                <div class="rounded-xl overflow-hidden">
+                    <img src="{{ url_for('static', filename='images/construction_site_cleaning.png') }}" alt="" class="w-full h-full object-cover">
+                </div>
+                <div class="rounded-xl overflow-hidden">
+                    <img src="{{ url_for('static', filename='images/clean_apartment_interior.png') }}" alt="" class="w-full h-full object-cover">
+                </div>
+            </div>
+            <div class="text-center lg:text-left">
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary mb-4 sm:mb-6">Le Nettoyage Professionnel<br class="hidden sm:block">Fait Correctement</h2>
+                <p class="text-gray-600 mb-3 sm:mb-4 leading-relaxed text-sm sm:text-base">Chez Bellari, nous comprenons que chaque espace est unique. C'est pourquoi nous offrons des solutions de nettoyage sur mesure qui répondent à vos besoins spécifiques.</p>
+                <p class="text-gray-600 mb-6 sm:mb-8 leading-relaxed text-sm sm:text-base">Notre équipe utilise des équipements professionnels et des produits écologiques pour garantir des résultats impeccables tout en préservant l'environnement.</p>
+                <a href="{{ url_for('devis') }}" class="bg-primary hover:bg-primary/90 text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-semibold shadow-lg transition-all inline-block text-sm sm:text-base">Demander un Devis</a>
             </div>
         </div>
     </div>
 </section>
 
 <!-- POURQUOI NOUS CHOISIR -->
-<section class="py-20 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-6">
-        <div class="flex items-center gap-4 mb-12">
-            <div class="flex-1 h-px bg-gray-300"></div>
-            <h2 class="text-3xl md:text-4xl font-bold text-primary text-center">Pourquoi Choisir<br>Bellari ?</h2>
-            <div class="flex-1 h-px bg-gray-300"></div>
+<section class="py-12 sm:py-16 lg:py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 mb-8 sm:mb-12">
+            <div class="hidden sm:block flex-1 h-px bg-gray-300"></div>
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary text-center">Pourquoi Choisir<br class="sm:hidden">Bellari ?</h2>
+            <div class="hidden sm:block flex-1 h-px bg-gray-300"></div>
         </div>
         
-        <div class="flex flex-wrap justify-center gap-4 mb-12">
-            <span class="bg-primary text-white px-6 py-2 rounded-full text-sm font-medium">Nettoyage Résidentiel</span>
-            <span class="bg-white text-primary px-6 py-2 rounded-full text-sm font-medium border border-gray-200">Nettoyage Commercial</span>
-            <span class="bg-white text-primary px-6 py-2 rounded-full text-sm font-medium border border-gray-200">Nettoyage Spécialisé</span>
+        <div class="flex flex-wrap justify-center gap-2 sm:gap-4 mb-8 sm:mb-12">
+            <span class="bg-primary text-white px-4 sm:px-6 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium">Nettoyage Résidentiel</span>
+            <span class="bg-white text-primary px-4 sm:px-6 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium border border-gray-200">Nettoyage Commercial</span>
+            <span class="bg-white text-primary px-4 sm:px-6 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium border border-gray-200">Nettoyage Spécialisé</span>
         </div>
         
-        <div class="grid md:grid-cols-3 gap-8 mb-12">
-            <div class="text-center">
-                <div class="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-shield-alt text-accent text-2xl"></i>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 mb-8 sm:mb-12">
+            <div class="text-center p-4 sm:p-0">
+                <div class="w-14 h-14 sm:w-16 sm:h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                    <i class="fas fa-shield-alt text-accent text-xl sm:text-2xl"></i>
                 </div>
-                <h3 class="text-lg font-bold text-primary mb-2">Qualité Garantie</h3>
-                <p class="text-gray-600 text-sm">Nous garantissons des résultats impeccables à chaque intervention.</p>
+                <h3 class="text-base sm:text-lg font-bold text-primary mb-2">Qualité Garantie</h3>
+                <p class="text-gray-600 text-xs sm:text-sm">Nous garantissons des résultats impeccables à chaque intervention.</p>
             </div>
-            <div class="text-center">
-                <div class="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-leaf text-accent text-2xl"></i>
+            <div class="text-center p-4 sm:p-0">
+                <div class="w-14 h-14 sm:w-16 sm:h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                    <i class="fas fa-leaf text-accent text-xl sm:text-2xl"></i>
                 </div>
-                <h3 class="text-lg font-bold text-primary mb-2">Produits Écologiques</h3>
-                <p class="text-gray-600 text-sm">Utilisation de produits respectueux de l'environnement.</p>
+                <h3 class="text-base sm:text-lg font-bold text-primary mb-2">Produits Écologiques</h3>
+                <p class="text-gray-600 text-xs sm:text-sm">Utilisation de produits respectueux de l'environnement.</p>
             </div>
-            <div class="text-center">
-                <div class="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-clock text-accent text-2xl"></i>
+            <div class="text-center p-4 sm:p-0">
+                <div class="w-14 h-14 sm:w-16 sm:h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                    <i class="fas fa-clock text-accent text-xl sm:text-2xl"></i>
                 </div>
-                <h3 class="text-lg font-bold text-primary mb-2">Service Rapide</h3>
-                <p class="text-gray-600 text-sm">Intervention dans les 24h suivant votre demande.</p>
+                <h3 class="text-base sm:text-lg font-bold text-primary mb-2">Service Rapide</h3>
+                <p class="text-gray-600 text-xs sm:text-sm">Intervention dans les 24h suivant votre demande.</p>
             </div>
         </div>
         
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             <div class="bg-primary text-white p-6 rounded-2xl text-center">
                 <div class="text-4xl font-bold mb-1">5+</div>
                 <div class="text-sm opacity-80">Années</div>

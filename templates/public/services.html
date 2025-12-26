@@ -2,30 +2,30 @@
 
 {% block content %}
 <!-- HEADER -->
-<section class="bg-gradient-to-b from-accent/10 to-white py-16">
-    <div class="max-w-7xl mx-auto px-6 text-center">
-        <h1 class="text-4xl md:text-5xl font-bold text-primary mb-4">Nos Services de Nettoyage</h1>
-        <p class="text-gray-600 text-lg max-w-2xl mx-auto">Solutions professionnelles adaptées à tous vos besoins de nettoyage</p>
+<section class="bg-gradient-to-b from-accent/10 to-white py-10 sm:py-14 lg:py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-primary mb-3 sm:mb-4">Nos Services de Nettoyage</h1>
+        <p class="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">Solutions professionnelles adaptées à tous vos besoins de nettoyage</p>
     </div>
 </section>
 
 <!-- SERVICES GRID -->
-<section class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-6">
+<section class="py-12 sm:py-16 lg:py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
         {% set service_images = ['construction_site_cleaning.png', 'clean_apartment_interior.png', 'clean_office_space.png', 'clean_event_venue.png'] %}
-        <div class="grid md:grid-cols-2 gap-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
             {% for service in services %}
-            <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all group border border-gray-100">
-                <div class="h-64 overflow-hidden relative">
+            <div class="bg-white rounded-xl sm:rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all group border border-gray-100">
+                <div class="h-48 sm:h-56 lg:h-64 overflow-hidden relative">
                     <img src="{{ url_for('static', filename='images/' + service_images[loop.index0 % 4]) }}" alt="{{ service.title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                    <div class="absolute top-4 left-4">
-                        <span class="bg-accent text-white px-4 py-1 rounded-full text-sm font-medium">Professionnel</span>
+                    <div class="absolute top-3 left-3 sm:top-4 sm:left-4">
+                        <span class="bg-accent text-white px-3 sm:px-4 py-1 rounded-full text-xs sm:text-sm font-medium">Professionnel</span>
                     </div>
                 </div>
-                <div class="p-8">
-                    <h3 class="text-2xl font-bold text-primary mb-4">{{ service.title }}</h3>
-                    <p class="text-gray-600 mb-6 leading-relaxed">{{ service.description }}</p>
-                    <a href="{{ url_for('service_detail', id=service.id) }}" class="bg-accent hover:bg-accent/90 text-white px-6 py-2.5 rounded-full font-semibold inline-block transition-all">
+                <div class="p-5 sm:p-6 lg:p-8">
+                    <h3 class="text-xl sm:text-2xl font-bold text-primary mb-3 sm:mb-4">{{ service.title }}</h3>
+                    <p class="text-gray-600 mb-4 sm:mb-6 leading-relaxed text-sm sm:text-base">{{ service.description }}</p>
+                    <a href="{{ url_for('service_detail', id=service.id) }}" class="bg-primary hover:bg-primary/90 text-white px-5 sm:px-6 py-2 sm:py-2.5 rounded-full font-semibold inline-block transition-all text-sm sm:text-base">
                         En Savoir Plus →
                     </a>
                 </div>
@@ -36,15 +36,15 @@
 </section>
 
 <!-- GALERIE -->
-<section class="py-20 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-6">
-        <div class="text-center mb-12">
-            <h2 class="text-4xl font-bold text-primary mb-4">Nos Réalisations</h2>
-            <div class="w-24 h-1 bg-accent mx-auto"></div>
+<section class="py-12 sm:py-16 lg:py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="text-center mb-8 sm:mb-12">
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary mb-3 sm:mb-4">Nos Réalisations</h2>
+            <div class="w-16 sm:w-24 h-1 bg-accent mx-auto"></div>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             {% for img in ['construction_site_cleaning.png', 'clean_apartment_interior.png', 'clean_office_space.png', 'clean_event_venue.png'] %}
-            <div class="h-48 rounded-xl overflow-hidden group">
+            <div class="h-32 sm:h-40 lg:h-48 rounded-lg sm:rounded-xl overflow-hidden group">
                 <img src="{{ url_for('static', filename='images/' + img) }}" alt="Réalisation" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
             </div>
             {% endfor %}
@@ -53,11 +53,11 @@
 </section>
 
 <!-- CTA -->
-<section class="py-20 bg-gradient-to-r from-primary to-emerald-800 text-white">
-    <div class="max-w-4xl mx-auto px-6 text-center">
-        <h2 class="text-4xl font-bold mb-6">Besoin d'un Devis Personnalisé ?</h2>
-        <p class="text-lg opacity-90 mb-8">Contactez-nous pour discuter de vos besoins spécifiques. Devis gratuit et sans engagement.</p>
-        <a href="{{ url_for('contact') }}" class="bg-accent hover:bg-accent/90 text-white px-10 py-4 rounded-full font-semibold text-lg shadow-xl transition-all inline-block">
+<section class="py-12 sm:py-16 lg:py-20 bg-gradient-to-r from-primary to-emerald-800 text-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 sm:mb-6">Besoin d'un Devis Personnalisé ?</h2>
+        <p class="text-base sm:text-lg opacity-90 mb-6 sm:mb-8">Contactez-nous pour discuter de vos besoins spécifiques. Devis gratuit et sans engagement.</p>
+        <a href="{{ url_for('devis') }}" class="bg-accent hover:bg-accent/90 text-white px-8 sm:px-10 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg shadow-xl transition-all inline-block">
             Demander un Devis
         </a>
     </div>

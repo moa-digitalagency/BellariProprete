@@ -42,29 +42,43 @@
     {% endif %}
 
     <header class="bg-white border-b border-gray-100 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="flex justify-between items-center py-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="flex justify-between items-center py-3 sm:py-4">
                 <a href="{{ url_for('index') }}" class="flex items-center gap-2">
                     {% if settings and settings.logo_image %}
-                    <img src="{{ url_for('static', filename='images/' + settings.logo_image) }}" alt="{{ settings.logo_text }}" class="h-10">
+                    <img src="{{ url_for('static', filename='images/' + settings.logo_image) }}" alt="{{ settings.logo_text }}" class="h-8 sm:h-10">
                     {% else %}
-                    <div class="w-9 h-9 bg-primary rounded-lg flex items-center justify-center">
-                        <i class="fas fa-broom text-white text-sm"></i>
+                    <div class="w-8 h-8 sm:w-9 sm:h-9 bg-primary rounded-lg flex items-center justify-center">
+                        <i class="fas fa-broom text-white text-xs sm:text-sm"></i>
                     </div>
                     {% endif %}
-                    <span class="font-bold text-primary text-lg">{{ settings.logo_text if settings else 'Bellari' }}</span>
+                    <span class="font-bold text-primary text-base sm:text-lg">{{ settings.logo_text if settings else 'Bellari' }}</span>
                 </a>
                 
-                <nav class="hidden md:flex items-center gap-8">
-                    <a href="{{ url_for('index') }}" class="text-gray-600 hover:text-primary font-medium transition">Accueil</a>
-                    <a href="{{ url_for('services') }}" class="text-gray-600 hover:text-primary font-medium transition">Services</a>
-                    <a href="{{ url_for('contact') }}" class="text-gray-600 hover:text-primary font-medium transition">Contact</a>
+                <nav class="hidden lg:flex items-center gap-6 xl:gap-8">
+                    <a href="{{ url_for('index') }}" class="text-gray-600 hover:text-primary font-medium transition text-sm">Accueil</a>
+                    <a href="{{ url_for('services') }}" class="text-gray-600 hover:text-primary font-medium transition text-sm">Services</a>
+                    <a href="{{ url_for('contact') }}" class="text-gray-600 hover:text-primary font-medium transition text-sm">Contact</a>
                 </nav>
                 
-                <a href="{{ url_for('devis') }}" class="bg-primary hover:bg-primary/90 text-white px-5 py-2 rounded-full font-medium text-sm transition-all shadow-sm">
-                    Demande Devis
-                </a>
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <a href="{{ url_for('devis') }}" class="bg-primary hover:bg-primary/90 text-white px-4 sm:px-5 py-1.5 sm:py-2 rounded-full font-medium text-xs sm:text-sm transition-all shadow-sm">
+                        Devis
+                    </a>
+                    <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="lg:hidden w-9 h-9 flex items-center justify-center text-primary">
+                        <i class="fas fa-bars text-lg"></i>
+                    </button>
+                </div>
             </div>
+            
+            <nav id="mobile-menu" class="hidden lg:hidden pb-4 border-t border-gray-100 pt-3">
+                <div class="flex flex-col gap-2">
+                    <a href="{{ url_for('index') }}" class="text-gray-600 hover:text-primary font-medium transition py-2 px-2 rounded-lg hover:bg-gray-50">Accueil</a>
+                    <a href="{{ url_for('services') }}" class="text-gray-600 hover:text-primary font-medium transition py-2 px-2 rounded-lg hover:bg-gray-50">Services</a>
+                    <a href="{{ url_for('contact') }}" class="text-gray-600 hover:text-primary font-medium transition py-2 px-2 rounded-lg hover:bg-gray-50">Contact</a>
+                    <a href="{{ url_for('devis') }}" class="bg-primary text-white font-medium py-2 px-4 rounded-lg text-center mt-2">Demande Devis</a>
+                </div>
+            </nav>
         </div>
     </header>
 
@@ -81,27 +95,27 @@
         {% block content %}{% endblock %}
     </main>
 
-    <footer class="bg-primary text-white pt-16 pb-8">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid md:grid-cols-4 gap-12 mb-12">
-                <div>
-                    <div class="flex items-center gap-2 mb-6">
+    <footer class="bg-primary text-white pt-10 sm:pt-12 lg:pt-16 pb-6 sm:pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-12 mb-8 sm:mb-12">
+                <div class="text-center sm:text-left">
+                    <div class="flex items-center gap-2 mb-4 sm:mb-6 justify-center sm:justify-start">
                         {% if settings and settings.logo_image %}
-                        <img src="{{ url_for('static', filename='images/' + settings.logo_image) }}" alt="" class="h-8 brightness-0 invert">
+                        <img src="{{ url_for('static', filename='images/' + settings.logo_image) }}" alt="" class="h-7 sm:h-8 brightness-0 invert">
                         {% else %}
-                        <div class="w-9 h-9 bg-accent rounded-lg flex items-center justify-center">
-                            <i class="fas fa-broom text-white text-sm"></i>
+                        <div class="w-8 h-8 sm:w-9 sm:h-9 bg-accent rounded-lg flex items-center justify-center">
+                            <i class="fas fa-broom text-white text-xs sm:text-sm"></i>
                         </div>
                         {% endif %}
-                        <span class="font-bold text-lg">{{ settings.logo_text if settings else 'Bellari' }}</span>
+                        <span class="font-bold text-base sm:text-lg">{{ settings.logo_text if settings else 'Bellari' }}</span>
                     </div>
-                    <p class="text-gray-300 text-sm leading-relaxed">{{ settings.company_name if settings else 'Services de nettoyage professionnel au Maroc.' }}</p>
-                    {% if settings and settings.opening_hours %}<p class="text-gray-300 text-sm mt-4"><i class="fas fa-clock mr-2"></i>{{ settings.opening_hours }}</p>{% endif %}
+                    <p class="text-gray-300 text-xs sm:text-sm leading-relaxed">{{ settings.company_name if settings else 'Services de nettoyage professionnel au Maroc.' }}</p>
+                    {% if settings and settings.opening_hours %}<p class="text-gray-300 text-xs sm:text-sm mt-3 sm:mt-4"><i class="fas fa-clock mr-2"></i>{{ settings.opening_hours }}</p>{% endif %}
                 </div>
                 
-                <div>
-                    <h4 class="font-bold mb-4">Services</h4>
-                    <ul class="space-y-2 text-gray-300 text-sm">
+                <div class="text-center sm:text-left">
+                    <h4 class="font-bold mb-3 sm:mb-4 text-sm sm:text-base">Services</h4>
+                    <ul class="space-y-1.5 sm:space-y-2 text-gray-300 text-xs sm:text-sm">
                         <li><a href="{{ url_for('services') }}" class="hover:text-accent transition">Fin de Chantier</a></li>
                         <li><a href="{{ url_for('services') }}" class="hover:text-accent transition">Appartements</a></li>
                         <li><a href="{{ url_for('services') }}" class="hover:text-accent transition">Bureaux</a></li>
@@ -109,34 +123,34 @@
                     </ul>
                 </div>
                 
-                <div>
-                    <h4 class="font-bold mb-4">Contact</h4>
-                    <ul class="space-y-3 text-gray-300 text-sm">
-                        <li class="flex items-center gap-2"><i class="fas fa-phone text-accent w-4"></i> {{ settings.phone if settings else '+212 6 80 76 03 52' }}</li>
-                        <li class="flex items-center gap-2"><i class="fas fa-envelope text-accent w-4"></i> {{ settings.email if settings else 'contact@bellari.ma' }}</li>
-                        <li class="flex items-center gap-2"><i class="fas fa-map-marker-alt text-accent w-4"></i> {{ settings.address if settings else 'Maroc' }}</li>
+                <div class="text-center sm:text-left">
+                    <h4 class="font-bold mb-3 sm:mb-4 text-sm sm:text-base">Contact</h4>
+                    <ul class="space-y-2 sm:space-y-3 text-gray-300 text-xs sm:text-sm">
+                        <li class="flex items-center gap-2 justify-center sm:justify-start"><i class="fas fa-phone text-accent w-4"></i> {{ settings.phone if settings else '+212 6 80 76 03 52' }}</li>
+                        <li class="flex items-center gap-2 justify-center sm:justify-start"><i class="fas fa-envelope text-accent w-4"></i> {{ settings.email if settings else 'contact@bellari.ma' }}</li>
+                        <li class="flex items-center gap-2 justify-center sm:justify-start"><i class="fas fa-map-marker-alt text-accent w-4"></i> {{ settings.address if settings else 'Marrakech' }}</li>
                     </ul>
                 </div>
                 
-                <div>
-                    <h4 class="font-bold mb-4">Suivez-nous</h4>
-                    <div class="flex gap-3">
-                        {% if settings and settings.facebook %}<a href="{{ settings.facebook }}" target="_blank" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent transition-all"><i class="fab fa-facebook-f text-sm"></i></a>{% endif %}
-                        {% if settings and settings.instagram %}<a href="{{ settings.instagram }}" target="_blank" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent transition-all"><i class="fab fa-instagram text-sm"></i></a>{% endif %}
-                        {% if settings and settings.whatsapp %}<a href="https://wa.me/{{ settings.whatsapp|replace(' ', '')|replace('+', '') }}" target="_blank" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-green-500 transition-all"><i class="fab fa-whatsapp text-sm"></i></a>{% endif %}
+                <div class="text-center sm:text-left">
+                    <h4 class="font-bold mb-3 sm:mb-4 text-sm sm:text-base">Suivez-nous</h4>
+                    <div class="flex gap-3 justify-center sm:justify-start">
+                        {% if settings and settings.facebook %}<a href="{{ settings.facebook }}" target="_blank" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent transition-all"><i class="fab fa-facebook-f text-xs sm:text-sm"></i></a>{% endif %}
+                        {% if settings and settings.instagram %}<a href="{{ settings.instagram }}" target="_blank" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent transition-all"><i class="fab fa-instagram text-xs sm:text-sm"></i></a>{% endif %}
+                        {% if settings and settings.whatsapp %}<a href="https://wa.me/{{ settings.whatsapp|replace(' ', '')|replace('+', '') }}" target="_blank" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-green-500 transition-all"><i class="fab fa-whatsapp text-xs sm:text-sm"></i></a>{% endif %}
                     </div>
                 </div>
             </div>
             
-            <div class="border-t border-white/20 pt-8 text-center text-gray-400 text-sm">
+            <div class="border-t border-white/20 pt-6 sm:pt-8 text-center text-gray-400 text-xs sm:text-sm">
                 <p>&copy; 2025 {{ settings.company_name if settings else 'Bellari Propreté Services' }}. Tous droits réservés.</p>
             </div>
         </div>
     </footer>
 
     {% if settings and settings.whatsapp %}
-    <a href="https://wa.me/{{ settings.whatsapp|replace(' ', '')|replace('+', '') }}?text={{ settings.whatsapp_default_message|urlencode if settings.whatsapp_default_message else '' }}" target="_blank" class="fixed bottom-6 right-6 w-14 h-14 bg-green-500 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform z-50">
-        <i class="fab fa-whatsapp text-white text-2xl"></i>
+    <a href="https://wa.me/{{ settings.whatsapp|replace(' ', '')|replace('+', '') }}?text={{ settings.whatsapp_default_message|urlencode if settings.whatsapp_default_message else '' }}" target="_blank" class="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 w-12 h-12 sm:w-14 sm:h-14 bg-green-500 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform z-50">
+        <i class="fab fa-whatsapp text-white text-xl sm:text-2xl"></i>
     </a>
     {% endif %}
 
