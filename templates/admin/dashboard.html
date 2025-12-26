@@ -1,89 +1,45 @@
 {% extends 'admin/base.html' %}
 
-{% block title %}Tableau de bord - Admin{% endblock %}
-
 {% block content %}
-<div class="mb-8">
-    <h1 class="text-3xl font-bold text-dark">Tableau de bord</h1>
-    <p class="text-gray-500">Bienvenue dans votre espace d'administration</p>
-</div>
+<h1 class="text-3xl font-bold mb-8">Tableau de bord</h1>
 
-<div class="grid md:grid-cols-3 gap-6 mb-8">
-    <div class="bg-white rounded-2xl p-6 shadow-sm">
+<div class="grid md:grid-cols-4 gap-6 mb-8">
+    <div class="bg-white p-6 rounded-lg shadow">
         <div class="flex items-center justify-between">
-            <div>
-                <p class="text-gray-500 text-sm">Messages non lus</p>
-                <p class="text-3xl font-bold text-dark">{{ messages_count }}</p>
-            </div>
-            <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center">
-                <i class="fas fa-envelope text-primary text-xl"></i>
-            </div>
+            <div><p class="text-gray-600 text-sm">Messages non lus</p><p class="text-3xl font-bold">{{ unread_count }}</p></div>
+            <i class="fas fa-envelope text-blue-600 text-3xl opacity-20"></i>
         </div>
     </div>
-    
-    <div class="bg-white rounded-2xl p-6 shadow-sm">
+    <div class="bg-white p-6 rounded-lg shadow">
         <div class="flex items-center justify-between">
-            <div>
-                <p class="text-gray-500 text-sm">Services actifs</p>
-                <p class="text-3xl font-bold text-dark">{{ services_count }}</p>
-            </div>
-            <div class="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center">
-                <i class="fas fa-concierge-bell text-green-500 text-xl"></i>
-            </div>
+            <div><p class="text-gray-600 text-sm">Services</p><p class="text-3xl font-bold">{{ services_count }}</p></div>
+            <i class="fas fa-concierge-bell text-green-600 text-3xl opacity-20"></i>
         </div>
     </div>
-    
-    <div class="bg-white rounded-2xl p-6 shadow-sm">
+    <div class="bg-white p-6 rounded-lg shadow">
         <div class="flex items-center justify-between">
-            <div>
-                <p class="text-gray-500 text-sm">Témoignages</p>
-                <p class="text-3xl font-bold text-dark">{{ testimonials_count }}</p>
-            </div>
-            <div class="w-14 h-14 bg-yellow-100 rounded-xl flex items-center justify-center">
-                <i class="fas fa-star text-yellow-500 text-xl"></i>
-            </div>
+            <div><p class="text-gray-600 text-sm">Total Messages</p><p class="text-3xl font-bold">{{ messages_count }}</p></div>
+            <i class="fas fa-comments text-purple-600 text-3xl opacity-20"></i>
+        </div>
+    </div>
+    <div class="bg-white p-6 rounded-lg shadow">
+        <div class="flex items-center justify-between">
+            <div><p class="text-gray-600 text-sm">Témoignages</p><p class="text-3xl font-bold">{{ testimonials_count }}</p></div>
+            <i class="fas fa-star text-yellow-600 text-3xl opacity-20"></i>
         </div>
     </div>
 </div>
 
-<div class="bg-white rounded-2xl shadow-sm">
-    <div class="p-6 border-b border-gray-100">
-        <div class="flex items-center justify-between">
-            <h2 class="text-xl font-bold text-dark">Messages récents</h2>
-            <a href="{{ url_for('admin_messages') }}" class="text-primary hover:underline text-sm font-medium">Voir tout</a>
+<div class="bg-white rounded-lg shadow">
+    <div class="p-6 border-b"><h2 class="text-xl font-bold">Messages récents</h2></div>
+    <div class="divide-y">
+        {% for message in recent_messages %}
+        <div class="p-6 hover:bg-gray-50 transition">
+            <p class="font-semibold text-gray-900">{{ message.name }}</p>
+            <p class="text-sm text-gray-500">{{ message.email }}</p>
+            <p class="text-gray-700 mt-2">{{ message.message[:100] }}...</p>
         </div>
-    </div>
-    
-    <div class="divide-y divide-gray-100">
-        {% if recent_messages %}
-            {% for message in recent_messages %}
-            <div class="p-6 hover:bg-gray-50 transition">
-                <div class="flex items-start justify-between">
-                    <div class="flex items-start space-x-4">
-                        <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                            <span class="text-primary font-bold">{{ message.name[0] }}</span>
-                        </div>
-                        <div>
-                            <p class="font-semibold text-dark">{{ message.name }}</p>
-                            <p class="text-gray-500 text-sm">{{ message.email }}</p>
-                            <p class="text-gray-600 mt-2 line-clamp-2">{{ message.message[:100] }}{% if message.message|length > 100 %}...{% endif %}</p>
-                        </div>
-                    </div>
-                    <div class="text-right">
-                        <span class="text-gray-400 text-sm">{{ message.created_at.strftime('%d/%m/%Y') }}</span>
-                        {% if not message.is_read %}
-                        <span class="block mt-1 bg-primary text-white text-xs px-2 py-1 rounded-full">Nouveau</span>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        {% else %}
-            <div class="p-12 text-center text-gray-500">
-                <i class="fas fa-inbox text-4xl mb-4"></i>
-                <p>Aucun message pour le moment</p>
-            </div>
-        {% endif %}
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

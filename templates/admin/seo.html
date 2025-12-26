@@ -19,7 +19,7 @@
                     <td class="px-6 py-4">{{ seo.page_name }}</td>
                     <td class="px-6 py-4">{{ seo.title or '-' }}</td>
                     <td class="px-6 py-4 text-right">
-                        <a href="{{ url_for('admin.edit_seo', page=seo.page_name) }}" class="text-blue-600 hover:underline">Éditer</a>
+                        <a href="{{ url_for('admin_edit_seo', page=seo.page_name) }}" class="text-blue-600 hover:underline">Éditer</a>
                     </td>
                 </tr>
                 {% endfor %}

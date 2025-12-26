@@ -1,5 +1,4 @@
-from app.models import Service, ContactMessage, Testimonial, SiteSettings
-from app import db
+from models import Service, ContactMessage, Testimonial, db
 
 class ServiceManager:
     @staticmethod

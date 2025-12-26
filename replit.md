@@ -1,83 +1,91 @@
-# Bellari Propreté Services - Version 2.0
+# Bellari Propreté Services - Version 2.1
 
-## Architecture Refactorée
+## Architecture Simplifiée - Fichiers à la Racine
 
-### Structure Modulaire
+### Structure
 ```
-app/
-├── __init__.py           # Factory pattern, DB init
-├── models/               # Modèles SQLAlchemy
-│   ├── admin.py
-│   ├── service.py
-│   ├── message.py
-│   ├── testimonial.py
-│   └── settings.py
-├── routes/               # Blueprints des routes
-│   ├── public.py         # Pages publiques
-│   └── admin.py          # Panel admin
-├── services/             # Logique métier
-│   └── service_manager.py
-├── utils/                # Utilitaires
-│   ├── helpers.py
-│   └── image_generator.py (Génération d'images PIL)
-├── security/             # Sécurité
-└── templates/            # Templates Jinja2
-    ├── public/
-    └── admin/
+/
+├── app.py                   # Application Flask principale
+├── models.py                # Modèles SQLAlchemy
+├── services.py              # Logique métier
+├── utils.py                 # Utilitaires (images)
+├── run.py                   # Point d'entrée
+├── wsgi.py                  # Production
+├── templates/
+│   ├── public/
+│   │   ├── base.html
+│   │   ├── index.html
+│   │   ├── services.html
+│   │   ├── service_detail.html
+│   │   └── contact.html
+│   └── admin/
+│       ├── login.html
+│       ├── base.html
+│       ├── dashboard.html
+│       ├── messages.html
+│       ├── services.html
+│       ├── service_form.html
+│       ├── testimonials.html
+│       ├── testimonial_form.html
+│       ├── settings.html
+│       ├── seo.html
+│       └── seo_form.html
+└── static/images/           # Images générées
 ```
 
-### Base de Données PostgreSQL
-- **Admin**: Gestion des utilisateurs admin
-- **Service**: Services avec SEO, images, vedettes
+## Base de Données PostgreSQL
+- **Admin**: Authentification
+- **Service**: 4 services (avec images générées)
 - **ContactMessage**: Messages de contact
-- **Testimonial**: Témoignages clients
-- **SiteSettings**: Configuration du site
-- **SEOSettings**: SEO par page
+- **Testimonial**: Témoignages approuvés
+- **SiteSettings**: Configuration globale
+- **SEOSettings**: Gestion SEO par page
 
-## Fonctionnalités Principales
+## 4 Services Principaux
 
-### Site Public
-- ✅ Page d'accueil avec services en vedette
-- ✅ Page services détaillée avec images aléatoires
-- ✅ Page contact fonctionnelle
-- ✅ Pages de détails pour chaque service
-- ✅ Témoignages clients approuvés
-- ✅ Navigation responsive
+### 1. Nettoyage Fin de Chantier (EN VEDETTE - ordre 1)
+Description: Service spécialisé dans le nettoyage après travaux. Éliminez tous les débris, poussières et résidus de chantier pour une livraison parfaite.
+- Image : Générée automatiquement
+- SEO personnalisable
+- Featured : OUI
 
-### Panel Admin Complet
-- ✅ Dashboard avec statistiques
-- ✅ Gestion des messages (lecture, suppression)
-- ✅ Gestion complète des services
-  - Ajout/modification/suppression
-  - Images générées automatiquement
-  - Ordre d'affichage
-  - Vedettes (featured)
-  - SEO individuel
-- ✅ Gestion des témoignages
-  - Approbation avant publication
-- ✅ Paramètres du site
-  - Contact, réseaux sociaux
-  - Couleurs personnalisables
-- ✅ Gestion SEO
-  - Meta descriptions
-  - Mots-clés
-  - Images meta
+### 2. Nettoyage d'Appartements (EN VEDETTE - ordre 2)
+Description: Entretien professionnel de vos appartements avec produits de qualité. Service complet pour un logement impeccable.
+- Image : Générée automatiquement
+- Featured : OUI
 
-### Génération d'Images
-- Images aléatoires colorées avec PIL
-- Images spécifiques par service (nettoyage de chantier, etc.)
-- Génération automatique lors de création de service
+### 3. Nettoyage de Bureau (EN VEDETTE - ordre 3)
+Description: Maintien d'un environnement de travail propre et professionnel. Service régulier ou occasionnel pour vos bureaux.
+- Image : Générée automatiquement
+- Featured : OUI
+
+### 4. Nettoyage Fin d'Événement (ordre 4)
+Description: Nettoyage complet après événements. Remise en état rapide et efficace des lieux après vos festivités.
+- Image : Générée automatiquement
 
 ## Accès Admin
 - **URL**: `/admin/login`
-- **Identifiant**: `admin`
-- **Mot de passe**: `admin123`
+- **Identifiants**: `admin` / `admin123`
 
-## Mise en avant du Nettoyage de Chantier
-- Service en vedette sur page d'accueil
-- Ordre prioritaire (ordre = 1)
-- Image spécifique générée automatiquement
-- Section "Nettoyage de Chantier Professionnel" en héro
+### Fonctionnalités Admin Complètes
+- Dashboard avec statistiques
+- Gestion des messages de contact
+- Gestion complète des 4 services (CRUD)
+- Gestion des témoignages (approbation)
+- Paramètres du site (contact, réseaux sociaux, infos)
+- Gestion SEO par page
+
+## Page d'Accueil
+- Section héro : "Nettoyage Fin de Chantier" (mise en avant)
+- 3 services vedette affichés
+- Témoignages clients approuvés
+- CTA "Demander un devis" / "Tous nos services"
+- Bouton WhatsApp flottant
+
+## Génération d'Images
+- PIL/Pillow pour images aléatoires colorées
+- Générations automatiques lors de création
+- Spécifique à chaque service
 
 ## Déploiement
 - **Dev**: `python run.py`
@@ -85,9 +93,8 @@ app/
 - **Port**: 5000
 
 ## Technologies
-- Flask (Backend)
-- SQLAlchemy (ORM)
-- PostgreSQL (DB)
-- Tailwind CSS (Frontend)
-- PIL/Pillow (Image generation)
-- Flask-Login (Auth)
+- Flask 2.x
+- SQLAlchemy + PostgreSQL
+- Pillow (images)
+- Flask-Login (authentification)
+- Tailwind CSS (responsive)

@@ -3,85 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Admin - Bellari Propreté{% endblock %}</title>
+    <title>{% block title %}Admin{% endblock %}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#0ea5e9',
-                        secondary: '#0284c7',
-                        dark: '#0f172a'
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif']
-                    }
-                }
-            }
-        }
-    </script>
 </head>
-<body class="font-sans bg-gray-100 min-h-screen">
-    <div class="flex">
-        <aside class="w-64 bg-dark min-h-screen fixed left-0 top-0">
-            <div class="p-6 border-b border-white/10">
-                <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                        <i class="fas fa-broom text-white"></i>
-                    </div>
-                    <span class="text-white font-bold">Admin Panel</span>
-                </div>
+<body class="bg-gray-100">
+    <div class="flex h-screen">
+        <aside class="w-64 bg-gray-900 text-white">
+            <div class="p-6 border-b border-gray-800">
+                <h1 class="font-bold text-lg">Admin Panel</h1>
             </div>
-            
             <nav class="p-4 space-y-2">
-                <a href="{{ url_for('admin_dashboard') }}" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/10 hover:text-white transition {% if request.endpoint == 'admin_dashboard' %}bg-white/10 text-white{% endif %}">
-                    <i class="fas fa-home w-5"></i>
-                    <span>Tableau de bord</span>
-                </a>
-                <a href="{{ url_for('admin_messages') }}" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/10 hover:text-white transition {% if 'message' in request.endpoint %}bg-white/10 text-white{% endif %}">
-                    <i class="fas fa-envelope w-5"></i>
-                    <span>Messages</span>
-                </a>
-                <a href="{{ url_for('admin_services') }}" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/10 hover:text-white transition {% if 'service' in request.endpoint %}bg-white/10 text-white{% endif %}">
-                    <i class="fas fa-concierge-bell w-5"></i>
-                    <span>Services</span>
-                </a>
-                <a href="{{ url_for('admin_testimonials') }}" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/10 hover:text-white transition {% if 'testimonial' in request.endpoint %}bg-white/10 text-white{% endif %}">
-                    <i class="fas fa-star w-5"></i>
-                    <span>Témoignages</span>
-                </a>
-                <a href="{{ url_for('admin_settings') }}" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/10 hover:text-white transition {% if 'settings' in request.endpoint %}bg-white/10 text-white{% endif %}">
-                    <i class="fas fa-cog w-5"></i>
-                    <span>Paramètres</span>
-                </a>
+                <a href="{{ url_for('admin_dashboard') }}" class="block px-4 py-2 rounded hover:bg-gray-800 transition"><i class="fas fa-home mr-2"></i>Tableau de bord</a>
+                <a href="{{ url_for('admin_messages') }}" class="block px-4 py-2 rounded hover:bg-gray-800 transition"><i class="fas fa-envelope mr-2"></i>Messages</a>
+                <a href="{{ url_for('admin_services') }}" class="block px-4 py-2 rounded hover:bg-gray-800 transition"><i class="fas fa-concierge-bell mr-2"></i>Services</a>
+                <a href="{{ url_for('admin_testimonials') }}" class="block px-4 py-2 rounded hover:bg-gray-800 transition"><i class="fas fa-star mr-2"></i>Témoignages</a>
+                <a href="{{ url_for('admin_seo') }}" class="block px-4 py-2 rounded hover:bg-gray-800 transition"><i class="fas fa-search mr-2"></i>SEO</a>
+                <a href="{{ url_for('admin_settings') }}" class="block px-4 py-2 rounded hover:bg-gray-800 transition"><i class="fas fa-cog mr-2"></i>Paramètres</a>
             </nav>
-            
-            <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-white/10">
-                <a href="{{ url_for('index') }}" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/10 hover:text-white transition">
-                    <i class="fas fa-external-link-alt w-5"></i>
-                    <span>Voir le site</span>
-                </a>
-                <a href="{{ url_for('admin_logout') }}" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-red-400 hover:bg-red-500/10 transition">
-                    <i class="fas fa-sign-out-alt w-5"></i>
-                    <span>Déconnexion</span>
-                </a>
+            <div class="absolute bottom-0 w-64 p-4 border-t border-gray-800">
+                <a href="{{ url_for('index') }}" class="block px-4 py-2 rounded hover:bg-gray-800 transition mb-2"><i class="fas fa-globe mr-2"></i>Voir le site</a>
+                <a href="{{ url_for('admin_logout') }}" class="block px-4 py-2 rounded hover:bg-red-800 transition text-red-400"><i class="fas fa-sign-out-alt mr-2"></i>Déconnexion</a>
             </div>
         </aside>
         
-        <main class="ml-64 flex-1 p-8">
+        <main class="flex-1 overflow-auto p-8">
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     {% for category, message in messages %}
-                        <div class="mb-6 px-6 py-4 rounded-xl {% if category == 'success' %}bg-green-100 text-green-800{% else %}bg-red-100 text-red-800{% endif %}">
-                            {{ message }}
-                        </div>
+                    <div class="mb-6 p-4 rounded-lg {% if category == 'success' %}bg-green-100 text-green-700{% else %}bg-red-100 text-red-700{% endif %}">
+                        {{ message }}
+                    </div>
                     {% endfor %}
                 {% endif %}
             {% endwith %}
-            
             {% block content %}{% endblock %}
         </main>
     </div>
