@@ -1,0 +1,31 @@
+{% extends 'admin/base.html' %}
+
+{% block content %}
+<div class="flex justify-between items-center mb-8">
+    <h1 class="text-3xl font-bold">Témoignages</h1>
+    <a href="{{ url_for('admin.add_testimonial') }}" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:opacity-90">+ Ajouter</a>
+</div>
+
+<div class="space-y-4">
+    {% for testimonial in testimonials %}
+    <div class="bg-white rounded-lg shadow p-6 hover:shadow-lg transition">
+        <div class="flex justify-between items-start">
+            <div class="flex-1">
+                <h3 class="font-bold text-gray-900">{{ testimonial.name }}</h3>
+                <div class="flex text-yellow-400 my-2">
+                    {% for i in range(testimonial.rating) %}<i class="fas fa-star text-sm"></i>{% endfor %}
+                </div>
+                <p class="text-gray-700 italic">"{{ testimonial.content }}"</p>
+                {% if testimonial.approved %}<span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded mt-2 inline-block">Approuvé</span>{% endif %}
+            </div>
+            <div class="flex gap-2 ml-4">
+                <a href="{{ url_for('admin.edit_testimonial', id=testimonial.id) }}" class="text-blue-600 hover:underline text-sm">Modifier</a>
+                <form action="{{ url_for('admin.delete_testimonial', id=testimonial.id) }}" method="POST" class="inline" onsubmit="return confirm('Confirmer la suppression ?')">
+                    <button type="submit" class="text-red-600 hover:underline text-sm">Supprimer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'admin/base.html' %}
+
+{% block content %}
+<h1 class="text-3xl font-bold mb-8">Tableau de bord</h1>
+
+<div class="grid md:grid-cols-4 gap-6 mb-8">
+    <div class="bg-white p-6 rounded-lg shadow">
+        <div class="flex items-center justify-between">
+            <div><p class="text-gray-600 text-sm">Messages non lus</p><p class="text-3xl font-bold">{{ unread_count }}</p></div>
+            <i class="fas fa-envelope text-blue-600 text-3xl opacity-20"></i>
+        </div>
+    </div>
+    <div class="bg-white p-6 rounded-lg shadow">
+        <div class="flex items-center justify-between">
+            <div><p class="text-gray-600 text-sm">Services</p><p class="text-3xl font-bold">{{ services_count }}</p></div>
+            <i class="fas fa-concierge-bell text-green-600 text-3xl opacity-20"></i>
+        </div>
+    </div>
+    <div class="bg-white p-6 rounded-lg shadow">
+        <div class="flex items-center justify-between">
+            <div><p class="text-gray-600 text-sm">Total Messages</p><p class="text-3xl font-bold">{{ messages_count }}</p></div>
+            <i class="fas fa-comments text-purple-600 text-3xl opacity-20"></i>
+        </div>
+    </div>
+    <div class="bg-white p-6 rounded-lg shadow">
+        <div class="flex items-center justify-between">
+            <div><p class="text-gray-600 text-sm">Témoignages</p><p class="text-3xl font-bold">{{ testimonials_count }}</p></div>
+            <i class="fas fa-star text-yellow-600 text-3xl opacity-20"></i>
+        </div>
+    </div>
+</div>
+
+<div class="bg-white rounded-lg shadow">
+    <div class="p-6 border-b"><h2 class="text-xl font-bold">Messages récents</h2></div>
+    <div class="divide-y">
+        {% for message in recent_messages %}
+        <div class="p-6 hover:bg-gray-50 transition">
+            <p class="font-semibold text-gray-900">{{ message.name }}</p>
+            <p class="text-sm text-gray-500">{{ message.email }}</p>
+            <p class="text-gray-700 mt-2">{{ message.message[:100] }}...</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

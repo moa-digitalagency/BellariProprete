@@ -1,0 +1,65 @@
+{% extends 'admin/base.html' %}
+
+{% block content %}
+<div class="max-w-4xl">
+    <a href="{{ url_for('admin.services') }}" class="text-blue-600 hover:underline mb-4 inline-block">← Retour</a>
+    <h1 class="text-3xl font-bold mb-8">{% if service %}Modifier{% else %}Ajouter{% endif %} un service</h1>
+
+    <div class="bg-white rounded-lg shadow p-8">
+        <form method="POST" class="space-y-6">
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Titre</label>
+                <input type="text" name="title" value="{{ service.title if service else '' }}" required class="w-full px-4 py-3 border border-gray-300 rounded-lg">
+            </div>
+            
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Description courte</label>
+                <textarea name="description" rows="3" required class="w-full px-4 py-3 border border-gray-300 rounded-lg">{{ service.description if service else '' }}</textarea>
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Description détaillée</label>
+                <textarea name="long_description" rows="5" class="w-full px-4 py-3 border border-gray-300 rounded-lg">{{ service.long_description if service else '' }}</textarea>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Icône</label>
+                    <select name="icon" class="w-full px-4 py-3 border border-gray-300 rounded-lg">
+                        <option value="hard-hat" {% if service and service.icon == 'hard-hat' %}selected{% endif %}>Chantier</option>
+                        <option value="sparkles" {% if service and service.icon == 'sparkles' %}selected{% endif %}>Nettoyage</option>
+                        <option value="home" {% if service and service.icon == 'home' %}selected{% endif %}>Maison</option>
+                        <option value="building" {% if service and service.icon == 'building' %}selected{% endif %}>Immeuble</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Ordre</label>
+                    <input type="number" name="order" value="{{ service.order if service else 0 }}" class="w-full px-4 py-3 border border-gray-300 rounded-lg">
+                </div>
+            </div>
+
+            <div>
+                <label class="flex items-center space-x-2">
+                    <input type="checkbox" name="featured" {% if service and service.featured %}checked{% endif %} class="w-4 h-4">
+                    <span class="text-sm font-semibold">Afficher en vedette sur la page d'accueil</span>
+                </label>
+            </div>
+
+            <div class="border-t pt-6">
+                <h3 class="text-lg font-bold mb-4">SEO</h3>
+                <div class="space-y-4">
+                    <input type="text" name="seo_title" placeholder="Titre SEO" value="{{ service.seo_title if service else '' }}" class="w-full px-4 py-3 border border-gray-300 rounded-lg">
+                    <textarea name="seo_description" placeholder="Description SEO" class="w-full px-4 py-3 border border-gray-300 rounded-lg">{{ service.seo_description if service else '' }}</textarea>
+                    <input type="text" name="seo_keywords" placeholder="Mots-clés" value="{{ service.seo_keywords if service else '' }}" class="w-full px-4 py-3 border border-gray-300 rounded-lg">
+                </div>
+            </div>
+
+            <div class="flex gap-4">
+                <button type="submit" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:opacity-90">{% if service %}Enregistrer{% else %}Créer{% endif %}</button>
+                <a href="{{ url_for('admin.services') }}" class="px-8 py-3 border border-gray-300 rounded-lg hover:bg-gray-50">Annuler</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

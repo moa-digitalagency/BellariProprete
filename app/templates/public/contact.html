@@ -1,0 +1,49 @@
+{% extends 'public/base.html' %}
+
+{% block content %}
+<section class="gradient-bg text-white py-16 text-center">
+    <h1 class="text-4xl font-bold">Contactez-nous</h1>
+</section>
+
+<section class="py-16">
+    <div class="max-w-4xl mx-auto px-4">
+        <div class="grid md:grid-cols-2 gap-12">
+            <div>
+                <h2 class="text-2xl font-bold mb-6">Envoyez-nous un message</h2>
+                <form method="POST" class="space-y-4">
+                    <input type="text" name="name" placeholder="Votre nom" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <input type="email" name="email" placeholder="Votre email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <input type="tel" name="phone" placeholder="Votre téléphone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <input type="text" name="subject" placeholder="Sujet" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <textarea name="message" placeholder="Votre message" rows="5" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"></textarea>
+                    <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:opacity-90 transition">Envoyer</button>
+                </form>
+            </div>
+            <div>
+                <h2 class="text-2xl font-bold mb-6">Informations de contact</h2>
+                {% if settings %}
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-bold text-gray-900">Téléphone</h4>
+                        <p class="text-gray-600">{{ settings.phone }}</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-900">Email</h4>
+                        <p class="text-gray-600">{{ settings.email }}</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-900">Adresse</h4>
+                        <p class="text-gray-600">{{ settings.address }}</p>
+                    </div>
+                    <div class="pt-6 border-t">
+                        <a href="https://wa.me/{{ settings.whatsapp|replace(' ', '')|replace('+', '') }}" target="_blank" class="inline-block bg-green-500 text-white px-6 py-3 rounded-lg font-bold hover:opacity-90 transition">
+                            <i class="fab fa-whatsapp mr-2"></i>WhatsApp
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
