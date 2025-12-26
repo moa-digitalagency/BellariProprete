@@ -1,4 +1,4 @@
-# Bellari Propreté Services - Version 2.1
+# Bellari Propreté Services - Version 2.2
 
 ## Structure Organisée avec Dossiers
 
@@ -24,7 +24,8 @@
 │   │   ├── index.html
 │   │   ├── services.html
 │   │   ├── service_detail.html
-│   │   └── contact.html
+│   │   ├── contact.html
+│   │   └── devis.html       # Formulaire devis WhatsApp
 │   └── admin/
 │       ├── login.html
 │       ├── base.html
@@ -34,11 +35,12 @@
 │       ├── service_form.html
 │       ├── testimonials.html
 │       ├── testimonial_form.html
-│       ├── settings.html
+│       ├── settings.html    # Paramètres avancés
 │       ├── seo.html
-│       └── seo_form.html
+│       ├── seo_form.html    # SEO avancé
+│       └── images.html      # Gestion des images
 └── static/
-    └── images/              # Images générées automatiquement
+    └── images/              # Images uploadées et générées
 ```
 
 ## Base de Données PostgreSQL
@@ -46,41 +48,60 @@
 - **Service**: 4 services avec images et SEO
 - **ContactMessage**: Messages de contact
 - **Testimonial**: Témoignages clients approuvés
-- **SiteSettings**: Configuration du site
-- **SEOSettings**: Gestion SEO par page
+- **SiteSettings**: Configuration avancée du site
+- **SEOSettings**: Gestion SEO avancée par page
+- **SiteImage**: Images uploadées
 
-## 4 Services Principaux
+## Design
+- **Couleur Principale**: Vert foncé #1B4D3D
+- **Couleur Secondaire**: Vert clair #7CB342
+- **Style**: Moderne, professionnel, responsive
 
-### 1. Nettoyage Fin de Chantier ⭐ (VEDETTE - Ordre 1)
-- Description: Service spécialisé dans le nettoyage après travaux
-- Image: Générée automatiquement
-- Featured: OUI
+## Fonctionnalités Principales
 
-### 2. Nettoyage d'Appartements (VEDETTE - Ordre 2)
-- Description: Entretien professionnel avec produits de qualité
-- Image: Générée automatiquement
-- Featured: OUI
+### Page Devis (/devis)
+- Formulaire complet: nom, téléphone, service, adresse, surface, date
+- Envoi automatique via WhatsApp au numéro configuré
+- Message formaté avec tous les détails
 
-### 3. Nettoyage de Bureau (VEDETTE - Ordre 3)
-- Description: Environnement de travail propre et professionnel
-- Image: Générée automatiquement
-- Featured: OUI
+### SiteSettings Avancés
+- Informations entreprise (nom, adresse, horaires)
+- Contact (téléphone, email, WhatsApp)
+- Réseaux sociaux (Facebook, Instagram)
+- Couleurs personnalisables
+- Images (logo, héro, favicon)
+- Analytics (Google Analytics, GTM, Facebook Pixel)
+- Code personnalisé (header, footer, Google Maps embed)
+- Message WhatsApp par défaut
 
-### 4. Nettoyage Fin d'Événement (Ordre 4)
-- Description: Remise en état après événements
-- Image: Générée automatiquement
+### SEO Avancé par Page
+- Titre et description méta
+- Mots-clés
+- URL canonique
+- Directive robots (index/noindex)
+- Open Graph (type, image)
+- Twitter Card
+- Données structurées JSON-LD
+- Code head personnalisé par page
+
+### Gestion des Images
+- Upload d'images depuis l'admin
+- Catégorisation (héro, services, galerie, équipe)
+- Texte alternatif pour SEO
+- Suppression avec nettoyage fichier
 
 ## Accès Admin
 - **URL**: `/admin/login`
 - **Identifiants**: `admin` / `admin123`
 
-### Fonctionnalités Admin
+### Sections Admin
 - Dashboard avec statistiques
-- Gestion des messages de contact
-- Gestion complète des services (CRUD + SEO)
-- Gestion des témoignages (approbation)
-- Paramètres du site (contact, réseaux sociaux)
-- Gestion SEO par page
+- Messages de contact
+- Services (CRUD + upload image + SEO)
+- Témoignages (approbation)
+- Images (upload/gestion)
+- SEO par page
+- Paramètres avancés
 
 ## Déploiement
 - **Dev**: `python run.py`
@@ -88,8 +109,8 @@
 - **Port**: 5000
 
 ## Technologies
-- Flask
-- SQLAlchemy + PostgreSQL
-- Pillow (générateur d'images)
+- Flask + SQLAlchemy
+- PostgreSQL
+- Pillow (images)
 - Flask-Login (authentification)
 - Tailwind CSS (responsive)
