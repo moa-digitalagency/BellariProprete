@@ -10,50 +10,41 @@
     <style>
         * { scroll-behavior: smooth; }
         :root { --primary: #1B4D3D; --accent: #7CB342; }
-        
-        body { 
-            font-family: 'Poppins', sans-serif;
-            background: #FAFAFA;
-        }
-
+        body { font-family: 'Poppins', sans-serif; background: #FAFAFA; }
         .text-primary { color: var(--primary); }
         .bg-primary { background-color: var(--primary); }
         .text-accent { color: var(--accent); }
         .bg-accent { background-color: var(--accent); }
         .border-accent { border-color: var(--accent); }
-
-        nav { 
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-        }
-
-        .shadow-soft { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
     </style>
 </head>
 <body class="text-gray-700">
-    <!-- NAVIGATION - Style référence -->
-    <nav class="sticky top-0 z-50 border-b border-gray-100">
+    <!-- HEADER/NAV - Style exact référence: logo gauche, liens centre, bouton droite -->
+    <header class="bg-white border-b border-gray-100 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex justify-between items-center py-4">
-                <a href="{{ url_for('index') }}" class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-accent rounded-lg flex items-center justify-center">
+                <!-- Logo gauche -->
+                <a href="{{ url_for('index') }}" class="flex items-center gap-2">
+                    <div class="w-9 h-9 bg-accent rounded-lg flex items-center justify-center">
                         <i class="fas fa-broom text-white text-sm"></i>
                     </div>
-                    <span class="font-bold text-primary text-xl">Bellari</span>
+                    <span class="font-bold text-primary text-lg">Bellari</span>
                 </a>
                 
-                <div class="hidden md:flex items-center gap-8">
+                <!-- Liens centre -->
+                <nav class="hidden md:flex items-center gap-8">
                     <a href="{{ url_for('index') }}" class="text-gray-600 hover:text-primary font-medium transition">Accueil</a>
                     <a href="{{ url_for('services') }}" class="text-gray-600 hover:text-primary font-medium transition">Services</a>
                     <a href="{{ url_for('contact') }}" class="text-gray-600 hover:text-primary font-medium transition">Contact</a>
-                </div>
+                </nav>
                 
-                <a href="{{ url_for('contact') }}" class="bg-accent hover:bg-accent/90 text-white px-6 py-2.5 rounded-full font-semibold text-sm transition-all shadow-md">
+                <!-- Bouton droite -->
+                <a href="{{ url_for('contact') }}" class="bg-accent hover:bg-accent/90 text-white px-5 py-2 rounded-full font-medium text-sm transition-all shadow-sm">
                     Devis Gratuit
                 </a>
             </div>
         </div>
-    </nav>
+    </header>
 
     <main>
         {% with messages = get_flashed_messages(with_categories=true) %}
@@ -69,59 +60,53 @@
     </main>
 
     <!-- FOOTER - Style référence -->
-    <footer class="bg-primary text-white py-16">
+    <footer class="bg-primary text-white pt-16 pb-8">
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid md:grid-cols-4 gap-12 mb-12">
                 <div>
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="w-10 h-10 bg-accent rounded-lg flex items-center justify-center">
+                    <div class="flex items-center gap-2 mb-6">
+                        <div class="w-9 h-9 bg-accent rounded-lg flex items-center justify-center">
                             <i class="fas fa-broom text-white text-sm"></i>
                         </div>
-                        <span class="font-bold text-xl">Bellari</span>
+                        <span class="font-bold text-lg">Bellari</span>
                     </div>
-                    <p class="text-gray-300 text-sm leading-relaxed">Services de nettoyage professionnel au Maroc. Qualité, fiabilité et satisfaction garantie.</p>
+                    <p class="text-gray-300 text-sm leading-relaxed">Services de nettoyage professionnel au Maroc. Qualité et satisfaction garanties.</p>
                 </div>
                 
                 <div>
-                    <h4 class="font-bold mb-4 text-lg">Services</h4>
+                    <h4 class="font-bold mb-4">Services</h4>
                     <ul class="space-y-2 text-gray-300 text-sm">
-                        <li><a href="{{ url_for('services') }}" class="hover:text-accent transition">Nettoyage Fin de Chantier</a></li>
-                        <li><a href="{{ url_for('services') }}" class="hover:text-accent transition">Nettoyage Appartements</a></li>
-                        <li><a href="{{ url_for('services') }}" class="hover:text-accent transition">Nettoyage Bureaux</a></li>
-                        <li><a href="{{ url_for('services') }}" class="hover:text-accent transition">Nettoyage Événements</a></li>
+                        <li><a href="{{ url_for('services') }}" class="hover:text-accent transition">Fin de Chantier</a></li>
+                        <li><a href="{{ url_for('services') }}" class="hover:text-accent transition">Appartements</a></li>
+                        <li><a href="{{ url_for('services') }}" class="hover:text-accent transition">Bureaux</a></li>
+                        <li><a href="{{ url_for('services') }}" class="hover:text-accent transition">Événements</a></li>
                     </ul>
                 </div>
                 
                 <div>
-                    <h4 class="font-bold mb-4 text-lg">Contact</h4>
+                    <h4 class="font-bold mb-4">Contact</h4>
                     <ul class="space-y-3 text-gray-300 text-sm">
-                        <li class="flex items-center gap-2"><i class="fas fa-phone text-accent"></i> {{ settings.phone if settings else '+212 6 80 76 03 52' }}</li>
-                        <li class="flex items-center gap-2"><i class="fas fa-envelope text-accent"></i> {{ settings.email if settings else 'bellari.groupe@gmail.com' }}</li>
-                        <li class="flex items-center gap-2"><i class="fas fa-map-marker-alt text-accent"></i> {{ settings.address if settings else 'Maroc' }}</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-phone text-accent w-4"></i> {{ settings.phone if settings else '+212 6 80 76 03 52' }}</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-envelope text-accent w-4"></i> {{ settings.email if settings else 'contact@bellari.ma' }}</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-map-marker-alt text-accent w-4"></i> {{ settings.address if settings else 'Maroc' }}</li>
                     </ul>
                 </div>
                 
                 <div>
-                    <h4 class="font-bold mb-4 text-lg">Suivez-nous</h4>
+                    <h4 class="font-bold mb-4">Suivez-nous</h4>
                     <div class="flex gap-3">
-                        {% if settings and settings.facebook %}<a href="{{ settings.facebook }}" target="_blank" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent transition-all"><i class="fab fa-facebook-f"></i></a>{% endif %}
-                        {% if settings and settings.instagram %}<a href="{{ settings.instagram }}" target="_blank" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent transition-all"><i class="fab fa-instagram"></i></a>{% endif %}
-                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent transition-all"><i class="fab fa-linkedin-in"></i></a>
+                        {% if settings and settings.facebook %}<a href="{{ settings.facebook }}" target="_blank" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent transition-all"><i class="fab fa-facebook-f text-sm"></i></a>{% endif %}
+                        {% if settings and settings.instagram %}<a href="{{ settings.instagram }}" target="_blank" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent transition-all"><i class="fab fa-instagram text-sm"></i></a>{% endif %}
                     </div>
                 </div>
             </div>
             
-            <div class="border-t border-white/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-                <p class="text-gray-400 text-sm">&copy; 2025 Bellari Propreté Services. Tous droits réservés.</p>
-                <div class="flex gap-6 text-sm text-gray-400">
-                    <a href="#" class="hover:text-accent transition">Politique de confidentialité</a>
-                    <a href="#" class="hover:text-accent transition">Conditions d'utilisation</a>
-                </div>
+            <div class="border-t border-white/20 pt-8 text-center text-gray-400 text-sm">
+                <p>&copy; 2025 Bellari Propreté Services. Tous droits réservés.</p>
             </div>
         </div>
     </footer>
 
-    <!-- WhatsApp Button -->
     {% if settings %}<a href="https://wa.me/{{ settings.whatsapp|replace(' ', '')|replace('+', '') }}" target="_blank" class="fixed bottom-6 right-6 w-14 h-14 bg-green-500 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform z-50">
         <i class="fab fa-whatsapp text-white text-2xl"></i>
     </a>{% endif %}
