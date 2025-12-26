@@ -1,32 +1,28 @@
 {% extends 'public/base.html' %}
 
 {% block content %}
-<!-- HÉRO - Structure exacte référence: texte centré + grande image dessous -->
+<!-- HÉRO -->
 <section class="bg-gradient-to-b from-green-50 via-green-100/50 to-white pt-12 pb-0">
     <div class="max-w-4xl mx-auto px-6 text-center">
         <h1 class="text-4xl md:text-5xl font-bold text-primary mb-6 leading-tight">
             Services de Nettoyage<br>Professionnel au Maroc
         </h1>
         <p class="text-gray-600 text-lg mb-8 max-w-2xl mx-auto">Experts en nettoyage résidentiel et commercial. Nous rendons vos espaces impeccables avec des produits de qualité professionnelle.</p>
-        <a href="{{ url_for('contact') }}" class="bg-accent hover:bg-accent/90 text-white px-8 py-3 rounded-full font-semibold shadow-lg transition-all inline-block mb-12">Devis Gratuit</a>
+        <a href="{{ url_for('devis') }}" class="bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-full font-semibold shadow-lg transition-all inline-block mb-12">Demande Devis</a>
     </div>
     
-    <!-- Grande image héro comme la référence -->
     <div class="max-w-6xl mx-auto px-6">
         <div class="relative rounded-t-3xl overflow-hidden h-[400px] md:h-[500px] bg-gradient-to-r from-accent/20 to-primary/20">
-            <img src="{{ url_for('static', filename='images/cleaning_team_at_work.png') }}" alt="Équipe Bellari" class="w-full h-full object-cover object-top">
+            <img src="{{ url_for('static', filename='images/' + (settings.hero_image if settings and settings.hero_image else 'cleaning_team_at_work.png')) }}" alt="Équipe Bellari" class="w-full h-full object-cover object-top">
         </div>
     </div>
 </section>
 
-<!-- ZONE D'INTERVENTION - Style carte comme référence -->
+<!-- ZONE D'INTERVENTION -->
 <section class="py-20 bg-white">
     <div class="max-w-7xl mx-auto px-6">
         <div class="grid md:grid-cols-2 gap-12 items-center">
             <div class="bg-gradient-to-br from-accent/10 to-primary/5 rounded-3xl p-6 h-80 flex items-center justify-center relative overflow-hidden">
-                <div class="absolute inset-0 opacity-20">
-                    <div class="w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDEwIEwgNDAgMTAgTSAxMCAwIEwgMTAgNDAgTSAwIDIwIEwgNDAgMjAgTSAyMCAwIEwgMjAgNDAgTSAwIDMwIEwgNDAgMzAgTSAzMCAwIEwgMzAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzFCNEQzRCIgb3BhY2l0eT0iMC4xIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')]"></div>
-                </div>
                 <div class="text-center relative z-10">
                     <i class="fas fa-map-marker-alt text-accent text-6xl mb-4"></i>
                     <p class="text-primary font-bold text-xl">Maroc</p>
@@ -41,7 +37,7 @@
                     <li class="flex items-center gap-3"><i class="fas fa-check-circle text-accent"></i> <span>Équipe locale professionnelle</span></li>
                     <li class="flex items-center gap-3"><i class="fas fa-check-circle text-accent"></i> <span>Devis gratuit sur place</span></li>
                 </ul>
-                <a href="{{ url_for('contact') }}" class="text-accent font-semibold hover:underline inline-flex items-center gap-2">
+                <a href="{{ url_for('devis') }}" class="text-primary font-semibold hover:underline inline-flex items-center gap-2">
                     Demander un devis <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
@@ -49,7 +45,7 @@
     </div>
 </section>
 
-<!-- NOS SERVICES - Ligne de séparation + titre centré comme référence -->
+<!-- NOS SERVICES -->
 <section class="py-20 bg-gray-50">
     <div class="max-w-7xl mx-auto px-6">
         <div class="flex items-center gap-4 mb-12">
@@ -68,7 +64,7 @@
                 <div class="p-6">
                     <h3 class="text-xl font-bold text-primary mb-3">{{ service.title }}</h3>
                     <p class="text-gray-600 text-sm mb-4">{{ service.description[:90] }}...</p>
-                    <a href="{{ url_for('service_detail', id=service.id) }}" class="text-accent font-semibold hover:underline">En savoir plus →</a>
+                    <a href="{{ url_for('service_detail', id=service.id) }}" class="text-primary font-semibold hover:underline">En savoir plus →</a>
                 </div>
             </div>
             {% endfor %}
@@ -76,11 +72,10 @@
     </div>
 </section>
 
-<!-- SECTION COLLAGE IMAGES + TEXTE - Comme référence -->
+<!-- SECTION COLLAGE IMAGES + TEXTE -->
 <section class="py-20 bg-white">
     <div class="max-w-7xl mx-auto px-6">
         <div class="grid md:grid-cols-2 gap-12 items-center">
-            <!-- Collage d'images style référence -->
             <div class="grid grid-cols-12 grid-rows-6 gap-3 h-[450px]">
                 <div class="col-span-7 row-span-4 rounded-2xl overflow-hidden">
                     <img src="{{ url_for('static', filename='images/construction_site_cleaning.png') }}" alt="" class="w-full h-full object-cover">
@@ -95,18 +90,17 @@
                     <img src="{{ url_for('static', filename='images/clean_event_venue.png') }}" alt="" class="w-full h-full object-cover">
                 </div>
             </div>
-            <!-- Texte -->
             <div>
                 <h2 class="text-3xl md:text-4xl font-bold text-primary mb-6">Le Nettoyage Professionnel<br>Fait Correctement</h2>
                 <p class="text-gray-600 mb-4 leading-relaxed">Chez Bellari, nous comprenons que chaque espace est unique. C'est pourquoi nous offrons des solutions de nettoyage sur mesure qui répondent à vos besoins spécifiques.</p>
                 <p class="text-gray-600 mb-8 leading-relaxed">Notre équipe utilise des équipements professionnels et des produits écologiques pour garantir des résultats impeccables tout en préservant l'environnement.</p>
-                <a href="{{ url_for('contact') }}" class="bg-accent hover:bg-accent/90 text-white px-8 py-3 rounded-full font-semibold shadow-lg transition-all inline-block">Demander un Devis</a>
+                <a href="{{ url_for('devis') }}" class="bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-full font-semibold shadow-lg transition-all inline-block">Demander un Devis</a>
             </div>
         </div>
     </div>
 </section>
 
-<!-- POURQUOI NOUS CHOISIR - Style référence avec boutons + stats -->
+<!-- POURQUOI NOUS CHOISIR -->
 <section class="py-20 bg-gray-50">
     <div class="max-w-7xl mx-auto px-6">
         <div class="flex items-center gap-4 mb-12">
@@ -115,14 +109,12 @@
             <div class="flex-1 h-px bg-gray-300"></div>
         </div>
         
-        <!-- Boutons catégories comme référence -->
         <div class="flex flex-wrap justify-center gap-4 mb-12">
             <span class="bg-primary text-white px-6 py-2 rounded-full text-sm font-medium">Nettoyage Résidentiel</span>
             <span class="bg-white text-primary px-6 py-2 rounded-full text-sm font-medium border border-gray-200">Nettoyage Commercial</span>
             <span class="bg-white text-primary px-6 py-2 rounded-full text-sm font-medium border border-gray-200">Nettoyage Spécialisé</span>
         </div>
         
-        <!-- 3 points + stats -->
         <div class="grid md:grid-cols-3 gap-8 mb-12">
             <div class="text-center">
                 <div class="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -147,7 +139,6 @@
             </div>
         </div>
         
-        <!-- Stats boxes comme référence -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div class="bg-primary text-white p-6 rounded-2xl text-center">
                 <div class="text-4xl font-bold mb-1">5+</div>
@@ -169,7 +160,7 @@
     </div>
 </section>
 
-<!-- SERVICES RÉCURRENTS - Comme référence avec carte -->
+<!-- SERVICES RÉCURRENTS -->
 <section class="py-20 bg-white">
     <div class="max-w-7xl mx-auto px-6">
         <div class="grid md:grid-cols-2 gap-12 items-center">
@@ -182,19 +173,19 @@
             </div>
             <div>
                 <h2 class="text-3xl md:text-4xl font-bold text-primary mb-6">Services de Nettoyage<br>Récurrents au Maroc</h2>
-                <p class="text-gray-600 mb-6 leading-relaxed">Optez pour un contrat de nettoyage régulier et bénéficiez de tarifs préférentiels. Nous nous occupons de la propreté de vos locaux de manière régulière.</p>
+                <p class="text-gray-600 mb-6 leading-relaxed">Optez pour un contrat de nettoyage régulier et bénéficiez de tarifs préférentiels.</p>
                 <ul class="space-y-3 mb-8">
                     <li class="flex items-center gap-3"><i class="fas fa-check-circle text-accent"></i> <strong>Hebdomadaire</strong> - Bureaux et commerces</li>
                     <li class="flex items-center gap-3"><i class="fas fa-check-circle text-accent"></i> <strong>Bi-mensuel</strong> - Appartements</li>
                     <li class="flex items-center gap-3"><i class="fas fa-check-circle text-accent"></i> <strong>Mensuel</strong> - Entretien régulier</li>
                 </ul>
-                <a href="{{ url_for('contact') }}" class="bg-accent hover:bg-accent/90 text-white px-8 py-3 rounded-full font-semibold shadow-lg transition-all inline-block">En Savoir Plus</a>
+                <a href="{{ url_for('devis') }}" class="bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-full font-semibold shadow-lg transition-all inline-block">En Savoir Plus</a>
             </div>
         </div>
     </div>
 </section>
 
-<!-- NOS PROJETS / GALERIE - Comme référence -->
+<!-- NOS RÉALISATIONS -->
 <section class="py-20 bg-gray-50">
     <div class="max-w-7xl mx-auto px-6">
         <h2 class="text-3xl md:text-4xl font-bold text-primary text-center mb-12">Nos Réalisations</h2>
@@ -213,7 +204,7 @@
     </div>
 </section>
 
-<!-- TÉMOIGNAGES - Comme référence -->
+<!-- TÉMOIGNAGES -->
 {% if testimonials %}
 <section class="py-20 bg-white relative overflow-hidden">
     <div class="absolute top-0 right-0 w-64 h-64 bg-accent/10 rounded-full blur-3xl"></div>
@@ -230,7 +221,7 @@
                 </div>
                 <p class="text-gray-600 mb-6 italic">"{{ testimonial.content }}"</p>
                 <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-full bg-accent flex items-center justify-center text-white font-bold">
+                    <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold">
                         {{ testimonial.name[0] }}
                     </div>
                     <div>
@@ -245,7 +236,7 @@
 </section>
 {% endif %}
 
-<!-- CTA FINAL - Comme référence avec image personne -->
+<!-- CTA FINAL -->
 <section class="py-16 bg-gradient-to-r from-primary to-emerald-800 text-white">
     <div class="max-w-7xl mx-auto px-6">
         <div class="grid md:grid-cols-2 gap-12 items-center">
@@ -253,14 +244,14 @@
                 <h2 class="text-3xl md:text-4xl font-bold mb-6">Prêt Pour un Espace Impeccable ?</h2>
                 <p class="text-lg opacity-90 mb-8">Faites appel à Bellari Propreté Services pour transformer vos espaces. Devis gratuit et sans engagement.</p>
                 <div class="flex flex-wrap gap-4">
-                    <a href="{{ url_for('contact') }}" class="bg-accent hover:bg-accent/90 text-white px-8 py-3 rounded-full font-semibold shadow-lg transition-all">Demander un Devis</a>
-                    <a href="tel:+212680760352" class="bg-white/20 hover:bg-white/30 text-white px-8 py-3 rounded-full font-semibold transition-all flex items-center gap-2">
+                    <a href="{{ url_for('devis') }}" class="bg-accent hover:bg-accent/90 text-white px-8 py-3 rounded-full font-semibold shadow-lg transition-all">Demander un Devis</a>
+                    <a href="tel:{{ settings.phone if settings else '+212680760352' }}" class="bg-white/20 hover:bg-white/30 text-white px-8 py-3 rounded-full font-semibold transition-all flex items-center gap-2">
                         <i class="fas fa-phone"></i> Appeler
                     </a>
                 </div>
             </div>
             <div class="relative h-72 md:h-80 rounded-3xl overflow-hidden">
-                <img src="{{ url_for('static', filename='images/cleaning_team_at_work.png') }}" alt="Notre équipe" class="w-full h-full object-cover">
+                <img src="{{ url_for('static', filename='images/' + (settings.hero_image if settings and settings.hero_image else 'cleaning_team_at_work.png')) }}" alt="Notre équipe" class="w-full h-full object-cover">
             </div>
         </div>
     </div>

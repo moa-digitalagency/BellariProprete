@@ -1,0 +1,98 @@
+{% extends 'public/base.html' %}
+
+{% block content %}
+<section class="bg-gradient-to-b from-green-50 to-white py-16">
+    <div class="max-w-3xl mx-auto px-6">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-primary mb-4">Demande de Devis</h1>
+            <p class="text-gray-600">Remplissez le formulaire ci-dessous pour recevoir un devis personnalisé via WhatsApp</p>
+        </div>
+        
+        <div class="bg-white rounded-3xl shadow-xl p-8 md:p-12">
+            <form id="devisForm" class="space-y-6">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-primary mb-2">Nom Complet *</label>
+                        <input type="text" name="name" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all" placeholder="Votre nom">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-primary mb-2">Téléphone *</label>
+                        <input type="tel" name="phone" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all" placeholder="+212 6 XX XX XX XX">
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-semibold text-primary mb-2">Type de Service *</label>
+                    <select name="service" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all">
+                        <option value="">Sélectionnez un service</option>
+                        <option value="Nettoyage Fin de Chantier">Nettoyage Fin de Chantier</option>
+                        <option value="Nettoyage d'Appartements">Nettoyage d'Appartements</option>
+                        <option value="Nettoyage de Bureau">Nettoyage de Bureau</option>
+                        <option value="Nettoyage Fin d'Événement">Nettoyage Fin d'Événement</option>
+                        <option value="Autre">Autre</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-semibold text-primary mb-2">Adresse / Ville *</label>
+                    <input type="text" name="address" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all" placeholder="Votre adresse ou ville">
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-primary mb-2">Surface (m²)</label>
+                        <input type="text" name="surface" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all" placeholder="Ex: 100 m²">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-primary mb-2">Date Souhaitée</label>
+                        <input type="date" name="date" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all">
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-semibold text-primary mb-2">Détails Supplémentaires</label>
+                    <textarea name="details" rows="4" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all resize-none" placeholder="Décrivez vos besoins..."></textarea>
+                </div>
+                
+                <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-white py-4 rounded-xl font-semibold text-lg transition-all flex items-center justify-center gap-3">
+                    <i class="fab fa-whatsapp text-xl"></i>
+                    Envoyer via WhatsApp
+                </button>
+            </form>
+            
+            <p class="text-center text-gray-500 text-sm mt-6">
+                <i class="fas fa-lock mr-1"></i> Vos informations sont sécurisées et ne seront jamais partagées
+            </p>
+        </div>
+    </div>
+</section>
+
+<script>
+document.getElementById('devisForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const form = e.target;
+    const name = form.name.value;
+    const phone = form.phone.value;
+    const service = form.service.value;
+    const address = form.address.value;
+    const surface = form.surface.value;
+    const date = form.date.value;
+    const details = form.details.value;
+    
+    let message = `*DEMANDE DE DEVIS - {{ settings.company_name if settings else 'Bellari Propreté Services' }}*\n\n`;
+    message += `*Nom:* ${name}\n`;
+    message += `*Téléphone:* ${phone}\n`;
+    message += `*Service:* ${service}\n`;
+    message += `*Adresse:* ${address}\n`;
+    if (surface) message += `*Surface:* ${surface}\n`;
+    if (date) message += `*Date souhaitée:* ${date}\n`;
+    if (details) message += `*Détails:* ${details}\n`;
+    
+    const whatsappNumber = '{{ settings.whatsapp|replace(" ", "")|replace("+", "") if settings else "212680760352" }}';
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    
+    window.open(whatsappUrl, '_blank');
+});
+</script>
+{% endblock %}

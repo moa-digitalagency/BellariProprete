@@ -9,21 +9,22 @@
 </head>
 <body class="bg-gray-100">
     <div class="flex h-screen">
-        <aside class="w-64 bg-gray-900 text-white">
+        <aside class="w-64 bg-gray-900 text-white flex flex-col">
             <div class="p-6 border-b border-gray-800">
                 <h1 class="font-bold text-lg">Admin Panel</h1>
             </div>
-            <nav class="p-4 space-y-2">
-                <a href="{{ url_for('admin_dashboard') }}" class="block px-4 py-2 rounded hover:bg-gray-800 transition"><i class="fas fa-home mr-2"></i>Tableau de bord</a>
-                <a href="{{ url_for('admin_messages') }}" class="block px-4 py-2 rounded hover:bg-gray-800 transition"><i class="fas fa-envelope mr-2"></i>Messages</a>
-                <a href="{{ url_for('admin_services') }}" class="block px-4 py-2 rounded hover:bg-gray-800 transition"><i class="fas fa-concierge-bell mr-2"></i>Services</a>
-                <a href="{{ url_for('admin_testimonials') }}" class="block px-4 py-2 rounded hover:bg-gray-800 transition"><i class="fas fa-star mr-2"></i>Témoignages</a>
-                <a href="{{ url_for('admin_seo') }}" class="block px-4 py-2 rounded hover:bg-gray-800 transition"><i class="fas fa-search mr-2"></i>SEO</a>
-                <a href="{{ url_for('admin_settings') }}" class="block px-4 py-2 rounded hover:bg-gray-800 transition"><i class="fas fa-cog mr-2"></i>Paramètres</a>
+            <nav class="p-4 space-y-2 flex-1">
+                <a href="{{ url_for('admin_dashboard') }}" class="block px-4 py-2 rounded hover:bg-gray-800 transition"><i class="fas fa-home mr-2 w-5"></i>Tableau de bord</a>
+                <a href="{{ url_for('admin_messages') }}" class="block px-4 py-2 rounded hover:bg-gray-800 transition"><i class="fas fa-envelope mr-2 w-5"></i>Messages</a>
+                <a href="{{ url_for('admin_services') }}" class="block px-4 py-2 rounded hover:bg-gray-800 transition"><i class="fas fa-concierge-bell mr-2 w-5"></i>Services</a>
+                <a href="{{ url_for('admin_testimonials') }}" class="block px-4 py-2 rounded hover:bg-gray-800 transition"><i class="fas fa-star mr-2 w-5"></i>Témoignages</a>
+                <a href="{{ url_for('admin_images') }}" class="block px-4 py-2 rounded hover:bg-gray-800 transition"><i class="fas fa-images mr-2 w-5"></i>Images</a>
+                <a href="{{ url_for('admin_seo') }}" class="block px-4 py-2 rounded hover:bg-gray-800 transition"><i class="fas fa-search mr-2 w-5"></i>SEO</a>
+                <a href="{{ url_for('admin_settings') }}" class="block px-4 py-2 rounded hover:bg-gray-800 transition"><i class="fas fa-cog mr-2 w-5"></i>Paramètres</a>
             </nav>
-            <div class="absolute bottom-0 w-64 p-4 border-t border-gray-800">
-                <a href="{{ url_for('index') }}" class="block px-4 py-2 rounded hover:bg-gray-800 transition mb-2"><i class="fas fa-globe mr-2"></i>Voir le site</a>
-                <a href="{{ url_for('admin_logout') }}" class="block px-4 py-2 rounded hover:bg-red-800 transition text-red-400"><i class="fas fa-sign-out-alt mr-2"></i>Déconnexion</a>
+            <div class="p-4 border-t border-gray-800">
+                <a href="{{ url_for('index') }}" class="block px-4 py-2 rounded hover:bg-gray-800 transition mb-2"><i class="fas fa-globe mr-2 w-5"></i>Voir le site</a>
+                <a href="{{ url_for('admin_logout') }}" class="block px-4 py-2 rounded hover:bg-red-800 transition text-red-400"><i class="fas fa-sign-out-alt mr-2 w-5"></i>Déconnexion</a>
             </div>
         </aside>
         

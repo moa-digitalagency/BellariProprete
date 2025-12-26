@@ -1,8 +1,26 @@
-from flask import render_template, request, redirect, url_for, flash
+import os
+import uuid
+from flask import render_template, request, redirect, url_for, flash, current_app
 from flask_login import login_user, logout_user, login_required, current_user
-from models import db, Admin, Service, ContactMessage, Testimonial, SiteSettings, SEOSettings
+from werkzeug.utils import secure_filename
+from models import db, Admin, Service, ContactMessage, Testimonial, SiteSettings, SEOSettings, SiteImage
 from services import ServiceManager
-from utils import generate_random_image, get_settings
+from utils import get_settings
+
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp', 'svg'}
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def save_uploaded_file(file, folder='images'):
+    if file and allowed_file(file.filename):
+        ext = file.filename.rsplit('.', 1)[1].lower()
+        filename = f"{uuid.uuid4().hex}.{ext}"
+        upload_path = os.path.join(current_app.static_folder, folder)
+        os.makedirs(upload_path, exist_ok=True)
+        file.save(os.path.join(upload_path, filename))
+        return filename
+    return None
 
 def register_routes(app):
     @app.route('/')
@@ -35,6 +53,10 @@ def register_routes(app):
             flash('Votre message a été envoyé avec succès!', 'success')
             return redirect(url_for('contact'))
         return render_template('public/contact.html')
+
+    @app.route('/devis')
+    def devis():
+        return render_template('public/devis.html')
 
     @app.route('/admin/login', methods=['GET', 'POST'])
     def admin_login():
@@ -103,7 +125,13 @@ def register_routes(app):
     @login_required
     def admin_add_service():
         if request.method == 'POST':
-            image = generate_random_image(filename=f"service_{request.form.get('title').lower().replace(' ', '_')}.jpg")
+            image = 'default.jpg'
+            if 'image' in request.files:
+                file = request.files['image']
+                uploaded = save_uploaded_file(file)
+                if uploaded:
+                    image = uploaded
+            
             service = Service(
                 title=request.form.get('title'),
                 description=request.form.get('description'),
@@ -136,6 +164,13 @@ def register_routes(app):
             service.seo_title = request.form.get('seo_title')
             service.seo_description = request.form.get('seo_description')
             service.seo_keywords = request.form.get('seo_keywords')
+            
+            if 'image' in request.files:
+                file = request.files['image']
+                uploaded = save_uploaded_file(file)
+                if uploaded:
+                    service.image = uploaded
+            
             db.session.commit()
             flash('Service modifié avec succès', 'success')
             return redirect(url_for('admin_services'))
@@ -202,6 +237,7 @@ def register_routes(app):
         if not settings:
             settings = SiteSettings()
             db.session.add(settings)
+            db.session.commit()
         
         if request.method == 'POST':
             settings.company_name = request.form.get('company_name')
@@ -212,6 +248,35 @@ def register_routes(app):
             settings.instagram = request.form.get('instagram')
             settings.address = request.form.get('address')
             settings.logo_text = request.form.get('logo_text')
+            settings.primary_color = request.form.get('primary_color', '1B4D3D')
+            settings.secondary_color = request.form.get('secondary_color', '7CB342')
+            settings.header_code = request.form.get('header_code', '')
+            settings.footer_code = request.form.get('footer_code', '')
+            settings.google_analytics = request.form.get('google_analytics', '')
+            settings.google_tag_manager = request.form.get('google_tag_manager', '')
+            settings.facebook_pixel = request.form.get('facebook_pixel', '')
+            settings.whatsapp_default_message = request.form.get('whatsapp_default_message', '')
+            settings.opening_hours = request.form.get('opening_hours', '')
+            settings.map_embed = request.form.get('map_embed', '')
+            
+            if 'hero_image' in request.files:
+                file = request.files['hero_image']
+                uploaded = save_uploaded_file(file)
+                if uploaded:
+                    settings.hero_image = uploaded
+            
+            if 'logo_image' in request.files:
+                file = request.files['logo_image']
+                uploaded = save_uploaded_file(file)
+                if uploaded:
+                    settings.logo_image = uploaded
+            
+            if 'favicon' in request.files:
+                file = request.files['favicon']
+                uploaded = save_uploaded_file(file)
+                if uploaded:
+                    settings.favicon = uploaded
+            
             db.session.commit()
             flash('Paramètres mis à jour avec succès', 'success')
             return redirect(url_for('admin_settings'))
@@ -221,6 +286,13 @@ def register_routes(app):
     @app.route('/admin/seo')
     @login_required
     def admin_seo():
+        seos = SEOSettings.query.all()
+        pages = ['accueil', 'services', 'contact', 'devis']
+        for page in pages:
+            if not SEOSettings.query.filter_by(page_name=page).first():
+                seo = SEOSettings(page_name=page, title=f'{page.capitalize()} - Bellari')
+                db.session.add(seo)
+        db.session.commit()
         seos = SEOSettings.query.all()
         return render_template('admin/seo.html', seo_settings=seos)
 
@@ -236,8 +308,70 @@ def register_routes(app):
             seo.title = request.form.get('title')
             seo.description = request.form.get('description')
             seo.keywords = request.form.get('keywords')
+            seo.canonical_url = request.form.get('canonical_url')
+            seo.robots = request.form.get('robots', 'index, follow')
+            seo.og_type = request.form.get('og_type', 'website')
+            seo.twitter_card = request.form.get('twitter_card', 'summary_large_image')
+            seo.structured_data = request.form.get('structured_data', '')
+            seo.custom_head_code = request.form.get('custom_head_code', '')
+            
+            if 'meta_image' in request.files:
+                file = request.files['meta_image']
+                uploaded = save_uploaded_file(file)
+                if uploaded:
+                    seo.meta_image = uploaded
+            
             db.session.commit()
             flash('SEO mis à jour', 'success')
             return redirect(url_for('admin_seo'))
         
         return render_template('admin/seo_form.html', seo=seo)
+
+    @app.route('/admin/images')
+    @login_required
+    def admin_images():
+        images = SiteImage.query.order_by(SiteImage.uploaded_at.desc()).all()
+        return render_template('admin/images.html', images=images)
+
+    @app.route('/admin/images/upload', methods=['POST'])
+    @login_required
+    def admin_upload_image():
+        if 'image' not in request.files:
+            flash('Aucune image sélectionnée', 'error')
+            return redirect(url_for('admin_images'))
+        
+        file = request.files['image']
+        if file.filename == '':
+            flash('Aucune image sélectionnée', 'error')
+            return redirect(url_for('admin_images'))
+        
+        uploaded = save_uploaded_file(file)
+        if uploaded:
+            image = SiteImage(
+                name=request.form.get('name', file.filename),
+                filename=uploaded,
+                category=request.form.get('category', 'general'),
+                alt_text=request.form.get('alt_text', '')
+            )
+            db.session.add(image)
+            db.session.commit()
+            flash('Image uploadée avec succès', 'success')
+        else:
+            flash('Erreur lors de l\'upload', 'error')
+        
+        return redirect(url_for('admin_images'))
+
+    @app.route('/admin/images/<int:id>/delete', methods=['POST'])
+    @login_required
+    def admin_delete_image(id):
+        image = SiteImage.query.get_or_404(id)
+        try:
+            filepath = os.path.join(current_app.static_folder, 'images', image.filename)
+            if os.path.exists(filepath):
+                os.remove(filepath)
+        except:
+            pass
+        db.session.delete(image)
+        db.session.commit()
+        flash('Image supprimée', 'success')
+        return redirect(url_for('admin_images'))

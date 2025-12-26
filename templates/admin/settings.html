@@ -1,59 +1,164 @@
 {% extends 'admin/base.html' %}
 
 {% block content %}
-<h1 class="text-3xl font-bold mb-8">Paramètres du site</h1>
-
-<div class="max-w-4xl">
-    <div class="bg-white rounded-lg shadow p-8">
-        <form method="POST" class="space-y-6">
+<div class="max-w-6xl mx-auto">
+    <h1 class="text-2xl font-bold text-gray-800 mb-8">Paramètres du Site</h1>
+    
+    <form method="POST" enctype="multipart/form-data" class="space-y-8">
+        <div class="bg-white rounded-xl shadow-sm p-6">
+            <h2 class="text-lg font-semibold text-gray-800 mb-6 flex items-center gap-2">
+                <i class="fas fa-building text-blue-600"></i> Informations Générales
+            </h2>
             <div class="grid md:grid-cols-2 gap-6">
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">Nom de l'entreprise</label>
-                    <input type="text" name="company_name" value="{{ settings.company_name }}" class="w-full px-4 py-3 border border-gray-300 rounded-lg">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Nom de l'Entreprise</label>
+                    <input type="text" name="company_name" value="{{ settings.company_name }}" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500">
                 </div>
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">Texte du logo</label>
-                    <input type="text" name="logo_text" value="{{ settings.logo_text }}" class="w-full px-4 py-3 border border-gray-300 rounded-lg">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Texte du Logo</label>
+                    <input type="text" name="logo_text" value="{{ settings.logo_text }}" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Horaires d'Ouverture</label>
+                    <input type="text" name="opening_hours" value="{{ settings.opening_hours or '' }}" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500" placeholder="Lun-Sam: 8h-18h">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Adresse</label>
+                    <input type="text" name="address" value="{{ settings.address }}" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500">
                 </div>
             </div>
+        </div>
 
+        <div class="bg-white rounded-xl shadow-sm p-6">
+            <h2 class="text-lg font-semibold text-gray-800 mb-6 flex items-center gap-2">
+                <i class="fas fa-phone text-blue-600"></i> Contact
+            </h2>
             <div class="grid md:grid-cols-2 gap-6">
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">Téléphone</label>
-                    <input type="text" name="phone" value="{{ settings.phone }}" class="w-full px-4 py-3 border border-gray-300 rounded-lg">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Téléphone</label>
+                    <input type="text" name="phone" value="{{ settings.phone }}" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500">
                 </div>
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
-                    <input type="email" name="email" value="{{ settings.email }}" class="w-full px-4 py-3 border border-gray-300 rounded-lg">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                    <input type="email" name="email" value="{{ settings.email }}" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">WhatsApp (pour devis)</label>
+                    <input type="text" name="whatsapp" value="{{ settings.whatsapp }}" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500" placeholder="+212680760352">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Message WhatsApp par Défaut</label>
+                    <input type="text" name="whatsapp_default_message" value="{{ settings.whatsapp_default_message or '' }}" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500">
                 </div>
             </div>
+        </div>
 
+        <div class="bg-white rounded-xl shadow-sm p-6">
+            <h2 class="text-lg font-semibold text-gray-800 mb-6 flex items-center gap-2">
+                <i class="fas fa-share-alt text-blue-600"></i> Réseaux Sociaux
+            </h2>
             <div class="grid md:grid-cols-2 gap-6">
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">WhatsApp</label>
-                    <input type="text" name="whatsapp" value="{{ settings.whatsapp }}" class="w-full px-4 py-3 border border-gray-300 rounded-lg">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Facebook</label>
+                    <input type="url" name="facebook" value="{{ settings.facebook or '' }}" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500" placeholder="https://facebook.com/...">
                 </div>
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">Adresse</label>
-                    <input type="text" name="address" value="{{ settings.address }}" class="w-full px-4 py-3 border border-gray-300 rounded-lg">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Instagram</label>
+                    <input type="url" name="instagram" value="{{ settings.instagram or '' }}" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500" placeholder="https://instagram.com/...">
                 </div>
             </div>
+        </div>
 
+        <div class="bg-white rounded-xl shadow-sm p-6">
+            <h2 class="text-lg font-semibold text-gray-800 mb-6 flex items-center gap-2">
+                <i class="fas fa-palette text-blue-600"></i> Apparence & Couleurs
+            </h2>
             <div class="grid md:grid-cols-2 gap-6">
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">Facebook</label>
-                    <input type="url" name="facebook" value="{{ settings.facebook }}" class="w-full px-4 py-3 border border-gray-300 rounded-lg">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Couleur Principale (hex sans #)</label>
+                    <div class="flex gap-2">
+                        <input type="text" name="primary_color" value="{{ settings.primary_color or '1B4D3D' }}" class="flex-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500" placeholder="1B4D3D">
+                        <div class="w-10 h-10 rounded-lg border" style="background-color: #{{ settings.primary_color or '1B4D3D' }}"></div>
+                    </div>
                 </div>
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">Instagram</label>
-                    <input type="url" name="instagram" value="{{ settings.instagram }}" class="w-full px-4 py-3 border border-gray-300 rounded-lg">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Couleur Secondaire (hex sans #)</label>
+                    <div class="flex gap-2">
+                        <input type="text" name="secondary_color" value="{{ settings.secondary_color or '7CB342' }}" class="flex-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500" placeholder="7CB342">
+                        <div class="w-10 h-10 rounded-lg border" style="background-color: #{{ settings.secondary_color or '7CB342' }}"></div>
+                    </div>
                 </div>
             </div>
+        </div>
 
-            <div class="flex gap-4 pt-4">
-                <button type="submit" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:opacity-90">Enregistrer</button>
+        <div class="bg-white rounded-xl shadow-sm p-6">
+            <h2 class="text-lg font-semibold text-gray-800 mb-6 flex items-center gap-2">
+                <i class="fas fa-images text-blue-600"></i> Images du Site
+            </h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Logo</label>
+                    {% if settings.logo_image %}<img src="{{ url_for('static', filename='images/' + settings.logo_image) }}" class="h-16 mb-2 rounded">{% endif %}
+                    <input type="file" name="logo_image" accept="image/*" class="w-full text-sm">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Image Héro</label>
+                    {% if settings.hero_image %}<img src="{{ url_for('static', filename='images/' + settings.hero_image) }}" class="h-16 mb-2 rounded object-cover">{% endif %}
+                    <input type="file" name="hero_image" accept="image/*" class="w-full text-sm">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Favicon</label>
+                    {% if settings.favicon %}<img src="{{ url_for('static', filename='images/' + settings.favicon) }}" class="h-8 mb-2">{% endif %}
+                    <input type="file" name="favicon" accept="image/*" class="w-full text-sm">
+                </div>
             </div>
-        </form>
-    </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm p-6">
+            <h2 class="text-lg font-semibold text-gray-800 mb-6 flex items-center gap-2">
+                <i class="fas fa-chart-line text-blue-600"></i> Analytics & Tracking
+            </h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Google Analytics ID</label>
+                    <input type="text" name="google_analytics" value="{{ settings.google_analytics or '' }}" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500" placeholder="G-XXXXXXXXXX">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Google Tag Manager ID</label>
+                    <input type="text" name="google_tag_manager" value="{{ settings.google_tag_manager or '' }}" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500" placeholder="GTM-XXXXXXX">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Facebook Pixel ID</label>
+                    <input type="text" name="facebook_pixel" value="{{ settings.facebook_pixel or '' }}" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500" placeholder="XXXXXXXXXXXXXXXX">
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm p-6">
+            <h2 class="text-lg font-semibold text-gray-800 mb-6 flex items-center gap-2">
+                <i class="fas fa-code text-blue-600"></i> Code Personnalisé (Avancé)
+            </h2>
+            <div class="space-y-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Code Header (injecté dans &lt;head&gt;)</label>
+                    <textarea name="header_code" rows="4" class="w-full px-4 py-2 border rounded-lg font-mono text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500" placeholder="<!-- Scripts, styles, meta tags... -->">{{ settings.header_code or '' }}</textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Code Footer (injecté avant &lt;/body&gt;)</label>
+                    <textarea name="footer_code" rows="4" class="w-full px-4 py-2 border rounded-lg font-mono text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500" placeholder="<!-- Scripts, widgets... -->">{{ settings.footer_code or '' }}</textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Embed Google Maps</label>
+                    <textarea name="map_embed" rows="3" class="w-full px-4 py-2 border rounded-lg font-mono text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500" placeholder="<iframe src='...'></iframe>">{{ settings.map_embed or '' }}</textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex justify-end">
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-all">
+                <i class="fas fa-save mr-2"></i> Enregistrer les Paramètres
+            </button>
+        </div>
+    </form>
 </div>
 {% endblock %}
