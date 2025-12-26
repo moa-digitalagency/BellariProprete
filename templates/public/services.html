@@ -2,26 +2,26 @@
 
 {% block content %}
 <!-- HEADER -->
-<section class="bg-white py-16">
-    <div class="max-w-7xl mx-auto px-6">
-        <h1 class="text-5xl font-bold text-primary mb-4">Tous Nos Services</h1>
+<section class="py-20 px-6 bg-gradient-to-b from-primary/10 to-transparent">
+    <div class="max-w-7xl mx-auto">
+        <h1 class="text-6xl font-bold text-primary mb-4">Tous Nos Services</h1>
         <p class="text-xl text-gray-600">Solutions complètes de nettoyage adaptées à vos besoins</p>
     </div>
 </section>
 
 <!-- SERVICES GRID -->
-<section class="py-20 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-6">
+<section class="py-24 px-6">
+    <div class="max-w-7xl mx-auto">
         <div class="grid md:grid-cols-2 gap-8">
             {% for service in services %}
-            <div class="card-service bg-white rounded-xl shadow-sm overflow-hidden">
-                <div class="h-48 bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
-                    <i class="fas fa-{{ service.icon }} text-6xl text-accent"></i>
+            <div class="card-service overflow-hidden group">
+                <div class="h-48 bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center relative overflow-hidden">
+                    <i class="fas fa-{{ service.icon }} text-7xl text-accent group-hover:scale-125 group-hover:rotate-6 transition-all duration-500"></i>
                 </div>
                 <div class="p-8">
                     <h3 class="text-2xl font-bold text-primary mb-4">{{ service.title }}</h3>
-                    <p class="text-gray-600 mb-6">{{ service.description }}</p>
-                    <a href="{{ url_for('service_detail', id=service.id) }}" class="btn-accent px-6 py-2 rounded font-semibold inline-block">Découvrir →</a>
+                    <p class="text-gray-600 mb-6 leading-relaxed">{{ service.description }}</p>
+                    <a href="{{ url_for('service_detail', id=service.id) }}" class="btn-accent px-6 py-2 rounded-lg font-semibold inline-block">Découvrir →</a>
                 </div>
             </div>
             {% endfor %}
@@ -30,11 +30,11 @@
 </section>
 
 <!-- CTA -->
-<section class="py-20 bg-primary text-white">
-    <div class="max-w-7xl mx-auto px-6 text-center">
-        <h2 class="text-4xl font-bold mb-6">Besoin d'un Service Spécifique ?</h2>
-        <p class="text-xl text-gray-200 mb-8">Notre équipe est prête à créer une solution sur mesure pour vous.</p>
-        <a href="{{ url_for('contact') }}" class="btn-accent px-8 py-3 rounded font-semibold inline-block">Nous Contacter</a>
+<section class="py-24 px-6 bg-gradient-to-r from-primary to-emerald-900 text-white">
+    <div class="max-w-7xl mx-auto text-center glass-dark p-16 rounded-2xl">
+        <h2 class="text-5xl font-bold mb-6">Besoin d'un Service Spécifique ?</h2>
+        <p class="text-xl text-gray-100 mb-8">Notre équipe est prête à créer une solution sur mesure pour vous.</p>
+        <a href="{{ url_for('contact') }}" class="btn-accent px-8 py-4 rounded-lg font-semibold inline-block text-lg">Nous Contacter</a>
     </div>
 </section>
 {% endblock %}

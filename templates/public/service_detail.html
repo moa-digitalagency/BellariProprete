@@ -2,46 +2,50 @@
 
 {% block content %}
 <!-- HEADER -->
-<section class="bg-white py-12 border-b">
-    <div class="max-w-7xl mx-auto px-6">
-        <a href="{{ url_for('services') }}" class="text-accent hover:text-primary mb-4 inline-block">← Retour aux services</a>
-        <h1 class="text-5xl font-bold text-primary mb-2">{{ service.title }}</h1>
+<section class="py-16 px-6 border-b border-primary/10">
+    <div class="max-w-7xl mx-auto">
+        <a href="{{ url_for('services') }}" class="text-accent hover:text-primary mb-6 inline-flex items-center gap-2 font-medium">
+            <i class="fas fa-arrow-left"></i> Retour aux services
+        </a>
+        <h1 class="text-6xl font-bold text-primary">{{ service.title }}</h1>
     </div>
 </section>
 
 <!-- CONTENU -->
-<section class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-6">
+<section class="py-24 px-6">
+    <div class="max-w-7xl mx-auto">
         <div class="grid md:grid-cols-2 gap-12 items-start mb-16">
-            <div class="h-96 bg-gradient-to-br from-primary/10 to-accent/10 rounded-2xl flex items-center justify-center sticky top-24">
-                <i class="fas fa-{{ service.icon }} text-8xl text-accent"></i>
+            <div class="h-96 rounded-2xl overflow-hidden sticky top-24 group">
+                <div class="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary/10 to-accent/10">
+                    <i class="fas fa-{{ service.icon }} text-9xl text-accent/30 group-hover:scale-110 transition-transform duration-500"></i>
+                </div>
             </div>
-            <div>
-                <p class="text-lg text-gray-700 mb-8">{{ service.description }}</p>
-                {% if service.long_description %}<p class="text-gray-600 mb-8 leading-relaxed">{{ service.long_description }}</p>{% endif %}
+            <div class="space-y-8">
+                <div>
+                    <p class="text-lg text-gray-700 mb-6 leading-relaxed">{{ service.description }}</p>
+                    {% if service.long_description %}<p class="text-gray-600 leading-relaxed">{{ service.long_description }}</p>{% endif %}
+                </div>
                 
-                <div class="bg-accent/10 border-l-4 border-accent p-8 rounded-lg mb-8">
-                    <h3 class="text-2xl font-bold text-primary mb-4">Prêt à Commencer ?</h3>
-                    <a href="{{ url_for('contact') }}" class="btn-accent px-8 py-3 rounded font-bold inline-block">Demander un Devis Gratuit</a>
+                <div class="glass border-l-4 border-accent p-8 rounded-xl space-y-4">
+                    <h3 class="text-2xl font-bold text-primary">Prêt à Commencer ?</h3>
+                    <a href="{{ url_for('contact') }}" class="btn-accent px-8 py-3 rounded-lg font-bold inline-block">Demander un Devis Gratuit</a>
                 </div>
 
                 <div class="space-y-4">
-                    <div class="flex gap-4">
-                        <i class="fas fa-check text-accent text-2xl flex-shrink-0 mt-1"></i>
-                        <span class="text-gray-700">Service professionnel et de haute qualité</span>
+                    {% for item in [
+                        'Service professionnel et de haute qualité',
+                        'Équipe expérimentée et certifiée',
+                        'Tarifs transparents et compétitifs',
+                        'Satisfaction garantie à 100%'
+                    ] %}
+                    <div class="flex gap-4 group">
+                        <div class="w-6 h-6 rounded-full bg-accent/20 flex items-center justify-center flex-shrink-0 group-hover:bg-accent/40 transition-colors">
+                            <i class="fas fa-check text-accent text-sm"></i>
+                        </div>
+                        <span class="text-gray-700 pt-0.5">{{ item }}</span>
                     </div>
-                    <div class="flex gap-4">
-                        <i class="fas fa-check text-accent text-2xl flex-shrink-0 mt-1"></i>
-                        <span class="text-gray-700">Équipe expérimentée et certifiée</span>
-                    </div>
-                    <div class="flex gap-4">
-                        <i class="fas fa-check text-accent text-2xl flex-shrink-0 mt-1"></i>
-                        <span class="text-gray-700">Tarifs transparents et compétitifs</span>
-                    </div>
-                    <div class="flex gap-4">
-                        <i class="fas fa-check text-accent text-2xl flex-shrink-0 mt-1"></i>
-                        <span class="text-gray-700">Satisfaction garantie à 100%</span>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -49,11 +53,11 @@
 </section>
 
 <!-- CTA FINAL -->
-<section class="py-20 bg-primary text-white">
-    <div class="max-w-7xl mx-auto px-6 text-center">
-        <h2 class="text-3xl font-bold mb-4">Transformez Votre Espace Aujourd'hui</h2>
+<section class="py-24 px-6 bg-gradient-to-r from-primary to-emerald-900 text-white">
+    <div class="max-w-7xl mx-auto text-center">
+        <h2 class="text-4xl font-bold mb-4">Transformez Votre Espace Aujourd'hui</h2>
         <p class="text-lg text-gray-200 mb-8">Contactez-nous pour un devis personnalisé sans engagement.</p>
-        <a href="{{ url_for('contact') }}" class="btn-accent px-8 py-3 rounded font-bold inline-block">Nous Contacter</a>
+        <a href="{{ url_for('contact') }}" class="btn-accent px-8 py-3 rounded-lg font-bold inline-block text-lg">Nous Contacter</a>
     </div>
 </section>
 {% endblock %}

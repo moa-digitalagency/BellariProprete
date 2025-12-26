@@ -9,30 +9,141 @@
     <style>
         * { scroll-behavior: smooth; }
         :root { --primary: #1B4D3D; --accent: #8BC34A; }
-        body { background: #FEFDFB; font-family: 'Inter', sans-serif; }
-        .btn-accent { background: var(--accent); color: white; }
-        .btn-accent:hover { background: #7CB342; }
-        .text-primary { color: var(--primary); }
-        .bg-primary { background: var(--primary); }
-        .accent-text { color: var(--accent); }
-        section { position: relative; }
-        .card-service { transition: all 0.3s ease; }
-        .card-service:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        
+        html, body { height: 100%; }
+        body { 
+            background: linear-gradient(135deg, #FEFDFB 0%, #F5F3ED 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(139, 195, 74, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -20%;
+            left: -5%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(27, 77, 61, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        main { position: relative; z-index: 1; }
+        
+        .btn-accent { 
+            background: var(--accent); 
+            color: white;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 32px rgba(139, 195, 74, 0.2);
+        }
+        .btn-accent:hover { 
+            background: #7CB342;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(139, 195, 74, 0.3);
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 16px;
+        }
+
+        .glass-dark {
+            background: rgba(27, 77, 61, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(139, 195, 74, 0.2);
+            border-radius: 16px;
+        }
+
+        .card-service { 
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(139, 195, 74, 0.1);
+            border-radius: 16px;
+        }
+        .card-service:hover { 
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 20px 50px rgba(27, 77, 61, 0.15);
+            border-color: rgba(139, 195, 74, 0.3);
+        }
+
+        section {
+            position: relative;
+            z-index: 1;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(139, 195, 74, 0.1);
+        }
+
+        footer {
+            background: linear-gradient(135deg, var(--primary) 0%, #0d3329 100%);
+        }
+
+        .image-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .image-container:hover img {
+            transform: scale(1.05);
+        }
+
+        .overlay-gradient {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(27, 77, 61, 0.1) 0%, rgba(139, 195, 74, 0.1) 100%);
+        }
     </style>
 </head>
 <body class="text-gray-800">
-    <nav class="bg-white border-b border-gray-100 sticky top-0 z-50">
+    <nav class="sticky top-0 z-50 border-b border-gray-200/50">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="{{ url_for('index') }}" class="flex items-center gap-2">
-                <div class="w-10 h-10 bg-primary rounded flex items-center justify-center">
-                    <i class="fas fa-broom text-white"></i>
+            <a href="{{ url_for('index') }}" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 bg-gradient-to-br from-emerald-600 to-emerald-800 rounded-lg flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all">
+                    <i class="fas fa-broom text-white text-sm"></i>
                 </div>
-                <span class="font-bold text-primary hidden sm:inline">Bellari</span>
+                <span class="font-bold text-primary text-lg hidden sm:inline">Bellari</span>
             </a>
             <div class="hidden md:flex items-center gap-8">
-                <a href="{{ url_for('index') }}" class="text-gray-600 hover:text-primary transition">Accueil</a>
-                <a href="{{ url_for('services') }}" class="text-gray-600 hover:text-primary transition">Services</a>
-                <a href="{{ url_for('contact') }}" class="btn-accent px-6 py-2 rounded font-semibold">Contact</a>
+                <a href="{{ url_for('index') }}" class="text-gray-700 hover:text-primary transition font-medium">Accueil</a>
+                <a href="{{ url_for('services') }}" class="text-gray-700 hover:text-primary transition font-medium">Services</a>
+                <a href="{{ url_for('contact') }}" class="btn-accent px-6 py-2.5 rounded-lg font-semibold text-sm">Contact</a>
             </div>
         </div>
     </nav>
@@ -41,7 +152,7 @@
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
-                <div class="fixed top-24 right-4 z-50 px-6 py-4 rounded {% if category == 'success' %}bg-green-500{% else %}bg-red-500{% endif %} text-white">
+                <div class="fixed top-24 right-4 z-50 px-6 py-4 rounded-lg glass {% if category == 'success' %}bg-green-500/80 text-white{% else %}bg-red-500/80 text-white{% endif %} backdrop-blur-xl animate-in fade-in slide-in-from-top">
                     {{ message }}
                 </div>
                 {% endfor %}
@@ -50,39 +161,39 @@
         {% block content %}{% endblock %}
     </main>
 
-    <footer class="bg-primary text-white py-16">
+    <footer class="py-16 relative z-10">
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid md:grid-cols-4 gap-12 mb-12">
                 <div>
-                    <h4 class="font-bold mb-4 accent-text">Bellari</h4>
-                    <p class="text-gray-300 text-sm">Services de nettoyage professionnel de qualité.</p>
+                    <h4 class="font-bold mb-4 text-accent">Bellari</h4>
+                    <p class="text-gray-300 text-sm leading-relaxed">Services de nettoyage professionnel de qualité supérieure.</p>
                 </div>
                 <div>
-                    <h4 class="font-bold mb-4 accent-text">Services</h4>
+                    <h4 class="font-bold mb-4 text-accent">Services</h4>
                     <ul class="space-y-2 text-gray-300 text-sm">
-                        <li><a href="{{ url_for('services') }}" class="hover:accent-text transition">Tous les services</a></li>
+                        <li><a href="{{ url_for('services') }}" class="hover:text-accent transition">Tous les services</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-bold mb-4 accent-text">Contact</h4>
-                    <p class="text-gray-300 text-sm mb-1">{{ settings.phone if settings else '' }}</p>
+                    <h4 class="font-bold mb-4 text-accent">Contact</h4>
+                    <p class="text-gray-300 text-sm mb-2">{{ settings.phone if settings else '' }}</p>
                     <p class="text-gray-300 text-sm">{{ settings.email if settings else '' }}</p>
                 </div>
                 <div>
-                    <h4 class="font-bold mb-4 accent-text">Réseaux</h4>
+                    <h4 class="font-bold mb-4 text-accent">Réseaux</h4>
                     <div class="flex gap-4">
-                        {% if settings and settings.facebook %}<a href="{{ settings.facebook }}" target="_blank" class="text-gray-300 hover:accent-text transition"><i class="fab fa-facebook"></i></a>{% endif %}
-                        {% if settings and settings.instagram %}<a href="{{ settings.instagram }}" target="_blank" class="text-gray-300 hover:accent-text transition"><i class="fab fa-instagram"></i></a>{% endif %}
+                        {% if settings and settings.facebook %}<a href="{{ settings.facebook }}" target="_blank" class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center text-gray-300 hover:bg-accent hover:text-white transition-all"><i class="fab fa-facebook text-sm"></i></a>{% endif %}
+                        {% if settings and settings.instagram %}<a href="{{ settings.instagram }}" target="_blank" class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center text-gray-300 hover:bg-accent hover:text-white transition-all"><i class="fab fa-instagram text-sm"></i></a>{% endif %}
                     </div>
                 </div>
             </div>
-            <div class="border-t border-gray-700 pt-8 text-center text-gray-400 text-sm">
+            <div class="border-t border-white/10 pt-8 text-center text-gray-400 text-sm">
                 <p>&copy; 2025 Bellari Propreté Services. Tous droits réservés.</p>
             </div>
         </div>
     </footer>
 
-    {% if settings %}<a href="https://wa.me/{{ settings.whatsapp|replace(' ', '')|replace('+', '') }}" target="_blank" class="fixed bottom-6 right-6 w-14 h-14 bg-green-500 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition z-50">
+    {% if settings %}<a href="https://wa.me/{{ settings.whatsapp|replace(' ', '')|replace('+', '') }}" target="_blank" class="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform z-50 hover:shadow-green-500/40">
         <i class="fab fa-whatsapp text-white text-2xl"></i>
     </a>{% endif %}
 </body>
