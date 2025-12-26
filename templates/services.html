@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block title %}Services - Bellari Propreté Services{% endblock %}
+
+{% block content %}
+<section class="pt-32 pb-20 gradient-bg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold text-white mb-6">Nos Services</h1>
+        <p class="text-xl text-white/90 max-w-2xl mx-auto">
+            Des solutions de nettoyage professionnelles adaptées à tous vos besoins.
+        </p>
+    </div>
+</section>
+
+<section class="py-24 bg-light">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for service in services %}
+            <div class="bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition group">
+                <div class="h-56 gradient-bg flex items-center justify-center relative overflow-hidden">
+                    <i class="fas fa-{% if service.icon == 'building' %}building{% elif service.icon == 'home' %}home{% else %}sparkles{% endif %} text-white text-7xl group-hover:scale-110 transition"></i>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                </div>
+                <div class="p-8">
+                    <h3 class="text-xl font-bold mb-3">{{ service.title }}</h3>
+                    <p class="text-gray-600 mb-6">{{ service.description }}</p>
+                    <a href="{{ url_for('contact') }}" class="text-primary font-semibold hover:underline inline-flex items-center gap-2">
+                        Demander un devis <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+                <span class="text-primary font-semibold mb-4 block">Pourquoi nous choisir ?</span>
+                <h2 class="text-4xl font-bold mb-6">Une équipe d'experts à votre service</h2>
+                <p class="text-gray-600 text-lg mb-8">
+                    Avec des années d'expérience dans le nettoyage professionnel, nous garantissons des résultats impeccables.
+                </p>
+                
+                <div class="space-y-6">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-check text-white"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold mb-2">Équipe professionnelle</h4>
+                            <p class="text-gray-600">Personnel formé et expérimenté pour tous types de nettoyage.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-check text-white"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold mb-2">Équipements modernes</h4>
+                            <p class="text-gray-600">Utilisation de matériel professionnel de dernière génération.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-check text-white"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold mb-2">Produits écologiques</h4>
+                            <p class="text-gray-600">Produits respectueux de l'environnement et de votre santé.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-gradient-to-br from-primary/20 to-accent/20 rounded-3xl p-8">
+                <img src="https://images.unsplash.com/photo-1650964336599-a6b32f916378?auto=format&fit=crop&w=600&h=500" 
+                     alt="Produits de nettoyage" 
+                     class="rounded-2xl w-full h-auto shadow-2xl">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-24 gradient-bg">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-4xl font-bold text-white mb-6">Besoin d'un service sur mesure ?</h2>
+        <p class="text-xl text-white/90 mb-10">
+            Contactez-nous pour discuter de vos besoins spécifiques.
+        </p>
+        <a href="{{ url_for('contact') }}" class="inline-block bg-white text-primary px-8 py-4 rounded-xl font-semibold hover:bg-gray-100 transition shadow-xl">
+            Nous contacter
+        </a>
+    </div>
+</section>
+{% endblock %}

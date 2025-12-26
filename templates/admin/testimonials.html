@@ -1,0 +1,55 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Témoignages - Admin{% endblock %}
+
+{% block content %}
+<div class="mb-8 flex items-center justify-between">
+    <div>
+        <h1 class="text-3xl font-bold text-dark">Témoignages</h1>
+        <p class="text-gray-500">Gérez les témoignages clients</p>
+    </div>
+    <a href="{{ url_for('add_testimonial') }}" class="bg-primary text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-600 transition">
+        <i class="fas fa-plus mr-2"></i>Ajouter un témoignage
+    </a>
+</div>
+
+<div class="bg-white rounded-2xl shadow-sm">
+    <div class="divide-y divide-gray-100">
+        {% if testimonials %}
+            {% for testimonial in testimonials %}
+            <div class="p-6 hover:bg-gray-50 transition">
+                <div class="flex items-start justify-between">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                            <span class="text-primary font-bold">{{ testimonial.name[0] }}</span>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-dark">{{ testimonial.name }}</p>
+                            <div class="flex text-yellow-400 my-1">
+                                {% for i in range(testimonial.rating) %}
+                                <i class="fas fa-star text-sm"></i>
+                                {% endfor %}
+                            </div>
+                            <p class="text-gray-600 italic">"{{ testimonial.content }}"</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <a href="{{ url_for('edit_testimonial', id=testimonial.id) }}" class="px-4 py-2 bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200 transition text-sm">
+                            <i class="fas fa-edit mr-1"></i> Modifier
+                        </a>
+                        <a href="{{ url_for('delete_testimonial', id=testimonial.id) }}" class="px-4 py-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition text-sm" onclick="return confirm('Supprimer ce témoignage ?')">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="p-12 text-center text-gray-500">
+                <i class="fas fa-star text-4xl mb-4"></i>
+                <p>Aucun témoignage pour le moment</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
