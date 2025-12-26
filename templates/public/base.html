@@ -7,29 +7,32 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        html { scroll-behavior: smooth; }
-        :root { --color-primary: #1F4D3D; --color-accent: #7CB342; }
-        body { background: #FAFAF8; }
-        .btn-primary { background: var(--color-accent); color: white; transition: all 0.3s; }
-        .btn-primary:hover { background: #6BA331; transform: translateY(-2px); }
-        .text-primary { color: var(--color-primary); }
-        .bg-primary { background: var(--color-primary); }
-        .accent-green { color: var(--color-accent); }
+        * { scroll-behavior: smooth; }
+        :root { --primary: #1B4D3D; --accent: #8BC34A; }
+        body { background: #FEFDFB; font-family: 'Inter', sans-serif; }
+        .btn-accent { background: var(--accent); color: white; }
+        .btn-accent:hover { background: #7CB342; }
+        .text-primary { color: var(--primary); }
+        .bg-primary { background: var(--primary); }
+        .accent-text { color: var(--accent); }
+        section { position: relative; }
+        .card-service { transition: all 0.3s ease; }
+        .card-service:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
     </style>
 </head>
-<body class="font-sans text-gray-800">
-    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+<body class="text-gray-800">
+    <nav class="bg-white border-b border-gray-100 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <a href="{{ url_for('index') }}" class="flex items-center gap-2">
-                <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                <div class="w-10 h-10 bg-primary rounded flex items-center justify-center">
                     <i class="fas fa-broom text-white"></i>
                 </div>
-                <span class="text-lg font-bold text-primary">{{ settings.company_name if settings else 'Bellari' }}</span>
+                <span class="font-bold text-primary hidden sm:inline">Bellari</span>
             </a>
             <div class="hidden md:flex items-center gap-8">
-                <a href="{{ url_for('index') }}" class="text-gray-700 hover:text-primary transition">Accueil</a>
-                <a href="{{ url_for('services') }}" class="text-gray-700 hover:text-primary transition">Services</a>
-                <a href="{{ url_for('contact') }}" class="btn-primary px-6 py-2 rounded-lg font-semibold">Contact</a>
+                <a href="{{ url_for('index') }}" class="text-gray-600 hover:text-primary transition">Accueil</a>
+                <a href="{{ url_for('services') }}" class="text-gray-600 hover:text-primary transition">Services</a>
+                <a href="{{ url_for('contact') }}" class="btn-accent px-6 py-2 rounded font-semibold">Contact</a>
             </div>
         </div>
     </nav>
@@ -38,7 +41,7 @@
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
-                <div class="fixed top-24 right-4 z-50 px-6 py-4 rounded-lg {% if category == 'success' %}bg-green-500{% else %}bg-red-500{% endif %} text-white">
+                <div class="fixed top-24 right-4 z-50 px-6 py-4 rounded {% if category == 'success' %}bg-green-500{% else %}bg-red-500{% endif %} text-white">
                     {{ message }}
                 </div>
                 {% endfor %}
@@ -48,33 +51,33 @@
     </main>
 
     <footer class="bg-primary text-white py-16">
-        <div class="max-w-7xl mx-auto px-4">
+        <div class="max-w-7xl mx-auto px-6">
             <div class="grid md:grid-cols-4 gap-12 mb-12">
                 <div>
-                    <h4 class="font-bold mb-4 text-accent">Contact</h4>
-                    <p class="text-gray-300 text-sm mb-2">{{ settings.phone if settings else '' }}</p>
-                    <p class="text-gray-300 text-sm">{{ settings.email if settings else '' }}</p>
+                    <h4 class="font-bold mb-4 accent-text">Bellari</h4>
+                    <p class="text-gray-300 text-sm">Services de nettoyage professionnel de qualité.</p>
                 </div>
                 <div>
-                    <h4 class="font-bold mb-4 text-accent">Services</h4>
+                    <h4 class="font-bold mb-4 accent-text">Services</h4>
                     <ul class="space-y-2 text-gray-300 text-sm">
-                        <li><a href="{{ url_for('services') }}" class="hover:text-accent transition">Tous les services</a></li>
+                        <li><a href="{{ url_for('services') }}" class="hover:accent-text transition">Tous les services</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-bold mb-4 text-accent">Réseaux</h4>
-                    <div class="flex gap-4">
-                        {% if settings and settings.facebook %}<a href="{{ settings.facebook }}" target="_blank" class="text-gray-300 hover:text-accent transition"><i class="fab fa-facebook"></i></a>{% endif %}
-                        {% if settings and settings.instagram %}<a href="{{ settings.instagram }}" target="_blank" class="text-gray-300 hover:text-accent transition"><i class="fab fa-instagram"></i></a>{% endif %}
-                    </div>
+                    <h4 class="font-bold mb-4 accent-text">Contact</h4>
+                    <p class="text-gray-300 text-sm mb-1">{{ settings.phone if settings else '' }}</p>
+                    <p class="text-gray-300 text-sm">{{ settings.email if settings else '' }}</p>
                 </div>
                 <div>
-                    <h4 class="font-bold mb-4 text-accent">Adresse</h4>
-                    <p class="text-gray-300 text-sm">{{ settings.address if settings else '' }}</p>
+                    <h4 class="font-bold mb-4 accent-text">Réseaux</h4>
+                    <div class="flex gap-4">
+                        {% if settings and settings.facebook %}<a href="{{ settings.facebook }}" target="_blank" class="text-gray-300 hover:accent-text transition"><i class="fab fa-facebook"></i></a>{% endif %}
+                        {% if settings and settings.instagram %}<a href="{{ settings.instagram }}" target="_blank" class="text-gray-300 hover:accent-text transition"><i class="fab fa-instagram"></i></a>{% endif %}
+                    </div>
                 </div>
             </div>
-            <div class="border-t border-gray-700 pt-8 text-center text-gray-300 text-sm">
-                <p>&copy; 2025 {{ settings.company_name if settings else 'Bellari' }}. Tous droits réservés.</p>
+            <div class="border-t border-gray-700 pt-8 text-center text-gray-400 text-sm">
+                <p>&copy; 2025 Bellari Propreté Services. Tous droits réservés.</p>
             </div>
         </div>
     </footer>

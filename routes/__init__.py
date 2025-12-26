@@ -8,8 +8,9 @@ def register_routes(app):
     @app.route('/')
     def index():
         featured = ServiceManager.get_featured_services()
+        all_services = ServiceManager.get_all_services()
         testimonials = ServiceManager.get_approved_testimonials()
-        return render_template('public/index.html', featured_services=featured, testimonials=testimonials)
+        return render_template('public/index.html', featured_services=featured, all_services=all_services, testimonials=testimonials)
 
     @app.route('/services')
     def services():

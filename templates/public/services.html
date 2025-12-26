@@ -1,29 +1,40 @@
 {% extends 'public/base.html' %}
 
 {% block content %}
+<!-- HEADER -->
 <section class="bg-white py-16">
-    <div class="max-w-7xl mx-auto px-4">
-        <h1 class="text-4xl font-bold text-primary mb-4">Nos Services Complets</h1>
-        <p class="text-xl text-gray-600">Découvrez tous nos services de nettoyage professionnels adaptés à vos besoins.</p>
+    <div class="max-w-7xl mx-auto px-6">
+        <h1 class="text-5xl font-bold text-primary mb-4">Tous Nos Services</h1>
+        <p class="text-xl text-gray-600">Solutions complètes de nettoyage adaptées à vos besoins</p>
     </div>
 </section>
 
-<section class="py-20 bg-gray-100">
-    <div class="max-w-7xl mx-auto px-4">
-        <div class="grid md:grid-cols-2 gap-12">
+<!-- SERVICES GRID -->
+<section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="grid md:grid-cols-2 gap-8">
             {% for service in services %}
-            <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-lg transition">
-                <div class="h-48 bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                    <i class="fas fa-{{ service.icon }} text-6xl text-accent opacity-50"></i>
+            <div class="card-service bg-white rounded-xl shadow-sm overflow-hidden">
+                <div class="h-48 bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
+                    <i class="fas fa-{{ service.icon }} text-6xl text-accent"></i>
                 </div>
                 <div class="p-8">
                     <h3 class="text-2xl font-bold text-primary mb-4">{{ service.title }}</h3>
                     <p class="text-gray-600 mb-6">{{ service.description }}</p>
-                    <a href="{{ url_for('service_detail', id=service.id) }}" class="btn-primary px-6 py-2 rounded-lg font-semibold inline-block">Détails →</a>
+                    <a href="{{ url_for('service_detail', id=service.id) }}" class="btn-accent px-6 py-2 rounded font-semibold inline-block">Découvrir →</a>
                 </div>
             </div>
             {% endfor %}
         </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="py-20 bg-primary text-white">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+        <h2 class="text-4xl font-bold mb-6">Besoin d'un Service Spécifique ?</h2>
+        <p class="text-xl text-gray-200 mb-8">Notre équipe est prête à créer une solution sur mesure pour vous.</p>
+        <a href="{{ url_for('contact') }}" class="btn-accent px-8 py-3 rounded font-semibold inline-block">Nous Contacter</a>
     </div>
 </section>
 {% endblock %}

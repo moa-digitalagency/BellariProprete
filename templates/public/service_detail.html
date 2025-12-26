@@ -1,44 +1,59 @@
 {% extends 'public/base.html' %}
 
 {% block content %}
-<section class="bg-white py-12">
-    <div class="max-w-7xl mx-auto px-4">
-        <a href="{{ url_for('services') }}" class="text-accent hover:text-primary mb-6 inline-block">← Retour aux services</a>
-        <h1 class="text-4xl font-bold text-primary mb-4">{{ service.title }}</h1>
+<!-- HEADER -->
+<section class="bg-white py-12 border-b">
+    <div class="max-w-7xl mx-auto px-6">
+        <a href="{{ url_for('services') }}" class="text-accent hover:text-primary mb-4 inline-block">← Retour aux services</a>
+        <h1 class="text-5xl font-bold text-primary mb-2">{{ service.title }}</h1>
     </div>
 </section>
 
-<section class="py-20">
-    <div class="max-w-7xl mx-auto px-4">
-        <div class="grid md:grid-cols-2 gap-12 items-start">
-            <div class="bg-gradient-to-br from-primary/20 to-accent/20 h-96 rounded-lg flex items-center justify-center">
-                <i class="fas fa-{{ service.icon }} text-8xl text-accent opacity-50"></i>
+<!-- CONTENU -->
+<section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="grid md:grid-cols-2 gap-12 items-start mb-16">
+            <div class="h-96 bg-gradient-to-br from-primary/10 to-accent/10 rounded-2xl flex items-center justify-center sticky top-24">
+                <i class="fas fa-{{ service.icon }} text-8xl text-accent"></i>
             </div>
             <div>
                 <p class="text-lg text-gray-700 mb-8">{{ service.description }}</p>
-                {% if service.long_description %}<p class="text-gray-600 mb-8">{{ service.long_description }}</p>{% endif %}
+                {% if service.long_description %}<p class="text-gray-600 mb-8 leading-relaxed">{{ service.long_description }}</p>{% endif %}
                 
                 <div class="bg-accent/10 border-l-4 border-accent p-8 rounded-lg mb-8">
-                    <h3 class="text-2xl font-bold text-primary mb-4">Intéressé par ce service ?</h3>
-                    <a href="{{ url_for('contact') }}" class="btn-primary px-8 py-3 rounded-lg font-bold">Demander un devis</a>
+                    <h3 class="text-2xl font-bold text-primary mb-4">Prêt à Commencer ?</h3>
+                    <a href="{{ url_for('contact') }}" class="btn-accent px-8 py-3 rounded font-bold inline-block">Demander un Devis Gratuit</a>
                 </div>
 
                 <div class="space-y-4">
                     <div class="flex gap-4">
-                        <i class="fas fa-check text-accent text-2xl flex-shrink-0"></i>
-                        <span class="text-gray-700">Service professionnel et de qualité</span>
+                        <i class="fas fa-check text-accent text-2xl flex-shrink-0 mt-1"></i>
+                        <span class="text-gray-700">Service professionnel et de haute qualité</span>
                     </div>
                     <div class="flex gap-4">
-                        <i class="fas fa-check text-accent text-2xl flex-shrink-0"></i>
+                        <i class="fas fa-check text-accent text-2xl flex-shrink-0 mt-1"></i>
                         <span class="text-gray-700">Équipe expérimentée et certifiée</span>
                     </div>
                     <div class="flex gap-4">
-                        <i class="fas fa-check text-accent text-2xl flex-shrink-0"></i>
-                        <span class="text-gray-700">Tarifs compétitifs et transparents</span>
+                        <i class="fas fa-check text-accent text-2xl flex-shrink-0 mt-1"></i>
+                        <span class="text-gray-700">Tarifs transparents et compétitifs</span>
+                    </div>
+                    <div class="flex gap-4">
+                        <i class="fas fa-check text-accent text-2xl flex-shrink-0 mt-1"></i>
+                        <span class="text-gray-700">Satisfaction garantie à 100%</span>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="py-20 bg-primary text-white">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+        <h2 class="text-3xl font-bold mb-4">Transformez Votre Espace Aujourd'hui</h2>
+        <p class="text-lg text-gray-200 mb-8">Contactez-nous pour un devis personnalisé sans engagement.</p>
+        <a href="{{ url_for('contact') }}" class="btn-accent px-8 py-3 rounded font-bold inline-block">Nous Contacter</a>
     </div>
 </section>
 {% endblock %}
