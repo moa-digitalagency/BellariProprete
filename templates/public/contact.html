@@ -2,63 +2,72 @@
 
 {% block content %}
 <!-- HEADER -->
-<section class="py-20 px-6 bg-gradient-to-b from-primary/10 to-transparent">
-    <div class="max-w-7xl mx-auto">
-        <h1 class="text-6xl font-bold text-primary mb-4">Contactez-Nous</h1>
-        <p class="text-xl text-gray-600">Nous sommes à votre écoute pour répondre à toutes vos questions</p>
+<section class="relative h-64 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary/70 z-10"></div>
+    <img src="{{ url_for('static', filename='images/cleaning_team_at_work.png') }}" alt="Contact" class="w-full h-full object-cover">
+    <div class="absolute inset-0 z-20 flex items-center">
+        <div class="max-w-7xl mx-auto px-6 w-full">
+            <h1 class="text-4xl md:text-6xl font-bold text-white mb-2">Contactez-Nous</h1>
+            <p class="text-xl text-white/80">Nous sommes à votre écoute</p>
+        </div>
     </div>
 </section>
 
 <!-- CONTACT FORM & INFO -->
-<section class="py-24 px-6">
+<section class="py-20 px-6">
     <div class="max-w-7xl mx-auto">
         <div class="grid md:grid-cols-2 gap-12">
             <!-- FORM -->
-            <div class="glass p-10 rounded-2xl">
-                <h2 class="text-2xl font-bold text-primary mb-8">Envoyez-nous un Message</h2>
-                <form method="POST" class="space-y-6">
-                    <div>
-                        <label class="block text-sm font-semibold text-primary mb-2">Nom Complet</label>
-                        <input type="text" name="name" placeholder="Votre nom" required class="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white/50 focus:bg-white focus:ring-2 focus:ring-accent focus:border-transparent transition-all">
+            <div class="glass p-10 rounded-3xl">
+                <h2 class="text-2xl font-bold text-primary mb-2">Envoyez-nous un Message</h2>
+                <p class="text-gray-600 mb-8">Remplissez le formulaire et nous vous répondrons rapidement.</p>
+                <form method="POST" class="space-y-5">
+                    <div class="grid md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-sm font-semibold text-primary mb-2">Nom Complet</label>
+                            <input type="text" name="name" placeholder="Votre nom" required class="w-full px-4 py-3 border border-gray-200 rounded-xl bg-white/50 focus:bg-white focus:ring-2 focus:ring-accent focus:border-transparent transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-primary mb-2">Email</label>
+                            <input type="email" name="email" placeholder="Votre email" required class="w-full px-4 py-3 border border-gray-200 rounded-xl bg-white/50 focus:bg-white focus:ring-2 focus:ring-accent focus:border-transparent transition-all">
+                        </div>
                     </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-primary mb-2">Email</label>
-                        <input type="email" name="email" placeholder="Votre email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white/50 focus:bg-white focus:ring-2 focus:ring-accent focus:border-transparent transition-all">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-primary mb-2">Téléphone</label>
-                        <input type="tel" name="phone" placeholder="Votre téléphone" class="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white/50 focus:bg-white focus:ring-2 focus:ring-accent focus:border-transparent transition-all">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-primary mb-2">Sujet</label>
-                        <input type="text" name="subject" placeholder="Sujet de votre demande" required class="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white/50 focus:bg-white focus:ring-2 focus:ring-accent focus:border-transparent transition-all">
+                    <div class="grid md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-sm font-semibold text-primary mb-2">Téléphone</label>
+                            <input type="tel" name="phone" placeholder="Votre téléphone" class="w-full px-4 py-3 border border-gray-200 rounded-xl bg-white/50 focus:bg-white focus:ring-2 focus:ring-accent focus:border-transparent transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-primary mb-2">Sujet</label>
+                            <input type="text" name="subject" placeholder="Sujet" required class="w-full px-4 py-3 border border-gray-200 rounded-xl bg-white/50 focus:bg-white focus:ring-2 focus:ring-accent focus:border-transparent transition-all">
+                        </div>
                     </div>
                     <div>
                         <label class="block text-sm font-semibold text-primary mb-2">Message</label>
-                        <textarea name="message" placeholder="Votre message" rows="6" required class="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white/50 focus:bg-white focus:ring-2 focus:ring-accent focus:border-transparent transition-all resize-none"></textarea>
+                        <textarea name="message" placeholder="Décrivez votre besoin..." rows="5" required class="w-full px-4 py-3 border border-gray-200 rounded-xl bg-white/50 focus:bg-white focus:ring-2 focus:ring-accent focus:border-transparent transition-all resize-none"></textarea>
                     </div>
-                    <button type="submit" class="w-full btn-accent py-3 rounded-lg font-bold text-lg">Envoyer le Message</button>
+                    <button type="submit" class="w-full btn-accent py-4 rounded-xl font-bold text-lg">Envoyer le Message</button>
                 </form>
             </div>
 
             <!-- INFO -->
-            <div class="space-y-8">
-                <div class="glass p-8 rounded-xl">
-                    <h3 class="text-xl font-bold text-primary mb-8">Informations de Contact</h3>
+            <div class="space-y-6">
+                <div class="glass p-8 rounded-2xl">
+                    <h3 class="text-xl font-bold text-primary mb-6">Informations de Contact</h3>
                     {% if settings %}
-                    <div class="space-y-6">
+                    <div class="space-y-5">
                         <div class="flex gap-4 group">
-                            <div class="w-12 h-12 rounded-lg bg-accent/20 flex items-center justify-center flex-shrink-0 group-hover:bg-accent/40 transition-colors">
-                                <i class="fas fa-phone text-accent text-lg"></i>
+                            <div class="w-14 h-14 rounded-xl bg-accent/20 flex items-center justify-center flex-shrink-0 group-hover:bg-accent group-hover:text-white transition-all">
+                                <i class="fas fa-phone text-accent group-hover:text-white text-lg"></i>
                             </div>
                             <div>
                                 <h4 class="font-bold text-primary mb-1">Téléphone</h4>
-                                <a href="tel:{{ settings.phone }}" class="text-gray-600 hover:text-accent transition">{{ settings.phone }}</a>
+                                <a href="tel:{{ settings.phone }}" class="text-gray-600 hover:text-accent transition text-lg">{{ settings.phone }}</a>
                             </div>
                         </div>
                         <div class="flex gap-4 group">
-                            <div class="w-12 h-12 rounded-lg bg-accent/20 flex items-center justify-center flex-shrink-0 group-hover:bg-accent/40 transition-colors">
-                                <i class="fas fa-envelope text-accent text-lg"></i>
+                            <div class="w-14 h-14 rounded-xl bg-accent/20 flex items-center justify-center flex-shrink-0 group-hover:bg-accent group-hover:text-white transition-all">
+                                <i class="fas fa-envelope text-accent group-hover:text-white text-lg"></i>
                             </div>
                             <div>
                                 <h4 class="font-bold text-primary mb-1">Email</h4>
@@ -66,8 +75,8 @@
                             </div>
                         </div>
                         <div class="flex gap-4 group">
-                            <div class="w-12 h-12 rounded-lg bg-accent/20 flex items-center justify-center flex-shrink-0 group-hover:bg-accent/40 transition-colors">
-                                <i class="fas fa-map-marker-alt text-accent text-lg"></i>
+                            <div class="w-14 h-14 rounded-xl bg-accent/20 flex items-center justify-center flex-shrink-0 group-hover:bg-accent group-hover:text-white transition-all">
+                                <i class="fas fa-map-marker-alt text-accent group-hover:text-white text-lg"></i>
                             </div>
                             <div>
                                 <h4 class="font-bold text-primary mb-1">Adresse</h4>
@@ -78,12 +87,24 @@
                     {% endif %}
                 </div>
 
-                <div class="glass-dark text-white p-8 rounded-xl border-l-4 border-accent">
-                    <h3 class="text-xl font-bold mb-4">Communication Rapide</h3>
-                    <p class="text-gray-200 mb-6 leading-relaxed">Préférez discuter directement ? Contactez-nous sur WhatsApp pour une réponse instantanée.</p>
-                    {% if settings %}<a href="https://wa.me/{{ settings.whatsapp|replace(' ', '')|replace('+', '') }}" target="_blank" class="btn-accent w-full py-3 rounded-lg font-bold text-center flex items-center justify-center gap-2">
-                        <i class="fab fa-whatsapp"></i> Chat WhatsApp
+                <div class="glass-dark text-white p-8 rounded-2xl">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 rounded-xl bg-green-500/30 flex items-center justify-center">
+                            <i class="fab fa-whatsapp text-green-400 text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold">WhatsApp</h3>
+                            <p class="text-gray-300 text-sm">Réponse instantanée</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-200 mb-6">Préférez discuter directement ? Contactez-nous sur WhatsApp pour une réponse rapide.</p>
+                    {% if settings %}<a href="https://wa.me/{{ settings.whatsapp|replace(' ', '')|replace('+', '') }}" target="_blank" class="bg-green-500 hover:bg-green-600 w-full py-3 rounded-xl font-bold text-center flex items-center justify-center gap-2 transition-colors">
+                        <i class="fab fa-whatsapp"></i> Démarrer un chat
                     </a>{% endif %}
+                </div>
+
+                <div class="h-64 rounded-2xl overflow-hidden shadow-lg">
+                    <img src="{{ url_for('static', filename='images/clean_office_space.png') }}" alt="Nos bureaux" class="w-full h-full object-cover">
                 </div>
             </div>
         </div>
