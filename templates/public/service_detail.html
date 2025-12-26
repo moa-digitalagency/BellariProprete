@@ -4,79 +4,96 @@
 <!-- HEADER -->
 <section class="relative h-80 overflow-hidden">
     <div class="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary/70 z-10"></div>
-    <img src="{{ url_for('static', filename='images/cleaning_team_at_work.png') }}" alt="{{ service.title }}" class="w-full h-full object-cover">
+    {% set service_images = {
+        'hard-hat': 'construction_site_cleaning.png',
+        'home': 'clean_apartment_interior.png',
+        'building': 'clean_office_space.png',
+        'glass-cheers': 'clean_event_venue.png'
+    } %}
+    <img src="{{ url_for('static', filename='images/' + service_images.get(service.icon, 'cleaning_team_at_work.png')) }}" alt="{{ service.title }}" class="w-full h-full object-cover">
     <div class="absolute inset-0 z-20 flex items-center">
         <div class="max-w-7xl mx-auto px-6 w-full">
             <a href="{{ url_for('services') }}" class="text-white/80 hover:text-white mb-4 inline-flex items-center gap-2 font-medium transition">
                 <i class="fas fa-arrow-left"></i> Retour aux services
             </a>
-            <h1 class="text-4xl md:text-6xl font-bold text-white">{{ service.title }}</h1>
+            <h1 class="text-4xl md:text-5xl font-bold text-white">{{ service.title }}</h1>
         </div>
     </div>
 </section>
 
 <!-- CONTENU -->
-<section class="py-20 px-6">
-    <div class="max-w-7xl mx-auto">
-        <div class="grid md:grid-cols-2 gap-12 items-start">
-            <div class="space-y-8 md:sticky md:top-24">
-                <div class="h-80 rounded-3xl overflow-hidden shadow-2xl group">
-                    {% set service_images = {
-                        'hard-hat': 'construction_site_cleaning.png',
-                        'home': 'clean_apartment_interior.png',
-                        'building': 'clean_office_space.png',
-                        'glass-cheers': 'clean_event_venue.png'
-                    } %}
-                    <img src="{{ url_for('static', filename='images/' + service_images.get(service.icon, 'cleaning_team_at_work.png')) }}" alt="{{ service.title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                </div>
-                
-                <div class="glass p-8 rounded-2xl border-l-4 border-accent">
-                    <h3 class="text-2xl font-bold text-primary mb-4">Prêt à Commencer ?</h3>
-                    <p class="text-gray-600 mb-6">Contactez-nous pour un devis gratuit et personnalisé.</p>
-                    <a href="{{ url_for('contact') }}" class="btn-accent px-8 py-3 rounded-xl font-bold inline-block w-full text-center">Demander un Devis</a>
-                </div>
-            </div>
-            
-            <div class="space-y-8">
+<section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="grid md:grid-cols-3 gap-12">
+            <div class="md:col-span-2 space-y-8">
                 <div>
-                    <h2 class="text-3xl font-bold text-primary mb-6">À propos de ce service</h2>
-                    <p class="text-lg text-gray-700 mb-6 leading-relaxed">{{ service.description }}</p>
+                    <h2 class="text-3xl font-bold text-primary mb-6">À Propos de Ce Service</h2>
+                    <p class="text-gray-600 text-lg leading-relaxed mb-6">{{ service.description }}</p>
                     {% if service.long_description %}<p class="text-gray-600 leading-relaxed">{{ service.long_description }}</p>{% endif %}
                 </div>
 
-                <div class="glass p-8 rounded-2xl">
-                    <h3 class="text-xl font-bold text-primary mb-6">Ce que nous offrons</h3>
-                    <div class="space-y-4">
+                <div class="bg-gray-50 p-8 rounded-2xl">
+                    <h3 class="text-xl font-bold text-primary mb-6">Ce Que Nous Offrons</h3>
+                    <div class="grid md:grid-cols-2 gap-4">
                         {% for item in [
-                            'Service professionnel et de haute qualité',
-                            'Équipe expérimentée et certifiée',
-                            'Tarifs transparents et compétitifs',
-                            'Produits écologiques et efficaces',
-                            'Satisfaction garantie à 100%',
-                            'Disponibilité 7 jours sur 7'
+                            'Équipement professionnel',
+                            'Produits écologiques',
+                            'Personnel formé',
+                            'Résultats garantis',
+                            'Tarifs compétitifs',
+                            'Service 7j/7'
                         ] %}
-                        <div class="flex gap-4 group items-center">
-                            <div class="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center flex-shrink-0 group-hover:bg-accent/40 transition-colors">
-                                <i class="fas fa-check text-accent text-sm"></i>
-                            </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-check-circle text-accent"></i>
                             <span class="text-gray-700">{{ item }}</span>
                         </div>
                         {% endfor %}
                     </div>
                 </div>
 
+                <div class="h-80 rounded-2xl overflow-hidden">
+                    <img src="{{ url_for('static', filename='images/' + service_images.get(service.icon, 'cleaning_team_at_work.png')) }}" alt="{{ service.title }}" class="w-full h-full object-cover">
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div class="bg-accent/10 border-2 border-accent p-8 rounded-2xl sticky top-24">
+                    <h3 class="text-2xl font-bold text-primary mb-4">Demander un Devis</h3>
+                    <p class="text-gray-600 mb-6">Obtenez un devis gratuit et personnalisé pour ce service.</p>
+                    <a href="{{ url_for('contact') }}" class="bg-accent hover:bg-accent/90 text-white w-full py-3 rounded-full font-semibold text-center block transition-all">
+                        Devis Gratuit
+                    </a>
+                    
+                    <div class="mt-8 pt-8 border-t border-accent/30">
+                        <div class="flex items-center gap-4 mb-4">
+                            <i class="fas fa-phone text-accent text-xl"></i>
+                            <div>
+                                <p class="text-sm text-gray-500">Appelez-nous</p>
+                                <p class="font-bold text-primary">+212 6 80 76 03 52</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <i class="fab fa-whatsapp text-green-500 text-xl"></i>
+                            <div>
+                                <p class="text-sm text-gray-500">WhatsApp</p>
+                                <p class="font-bold text-primary">Réponse rapide</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="grid grid-cols-3 gap-4">
-                    <div class="glass p-6 text-center rounded-xl">
-                        <div class="text-3xl font-bold text-accent mb-1">100%</div>
-                        <div class="text-sm text-gray-600">Satisfaction</div>
+                    <div class="bg-gray-50 p-4 text-center rounded-xl">
+                        <div class="text-2xl font-bold text-accent">100%</div>
+                        <div class="text-xs text-gray-500">Satisfaction</div>
                     </div>
-                    <div class="glass p-6 text-center rounded-xl">
-                        <div class="text-3xl font-bold text-accent mb-1">7j/7</div>
-                        <div class="text-sm text-gray-600">Disponibilité</div>
+                    <div class="bg-gray-50 p-4 text-center rounded-xl">
+                        <div class="text-2xl font-bold text-accent">7j/7</div>
+                        <div class="text-xs text-gray-500">Disponible</div>
                     </div>
-                    <div class="glass p-6 text-center rounded-xl">
-                        <div class="text-3xl font-bold text-accent mb-1">24h</div>
-                        <div class="text-sm text-gray-600">Réponse</div>
+                    <div class="bg-gray-50 p-4 text-center rounded-xl">
+                        <div class="text-2xl font-bold text-accent">24h</div>
+                        <div class="text-xs text-gray-500">Réponse</div>
                     </div>
                 </div>
             </div>
@@ -84,12 +101,14 @@
     </div>
 </section>
 
-<!-- CTA FINAL -->
-<section class="py-20 px-6 bg-gradient-to-r from-primary to-emerald-900 text-white">
-    <div class="max-w-4xl mx-auto text-center">
-        <h2 class="text-3xl md:text-4xl font-bold mb-4">Transformez Votre Espace Aujourd'hui</h2>
-        <p class="text-lg text-gray-200 mb-8">Contactez-nous pour un devis personnalisé sans engagement.</p>
-        <a href="{{ url_for('contact') }}" class="btn-accent px-10 py-4 rounded-xl font-bold inline-block text-lg">Nous Contacter</a>
+<!-- CTA -->
+<section class="py-16 bg-primary text-white">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+        <h2 class="text-3xl font-bold mb-4">Prêt à Transformer Votre Espace ?</h2>
+        <p class="opacity-90 mb-8">Contactez-nous dès aujourd'hui pour un devis gratuit.</p>
+        <a href="{{ url_for('contact') }}" class="bg-accent hover:bg-accent/90 text-white px-8 py-3 rounded-full font-semibold inline-block transition-all">
+            Nous Contacter
+        </a>
     </div>
 </section>
 {% endblock %}
