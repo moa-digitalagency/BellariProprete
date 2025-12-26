@@ -1,85 +1,173 @@
 {% extends 'admin/base.html' %}
 
 {% block content %}
-<div class="max-w-4xl">
+<div class="max-w-5xl">
     <a href="{{ url_for('admin_seo') }}" class="text-blue-600 hover:underline mb-4 inline-block">← Retour</a>
     <h1 class="text-2xl font-bold mb-8">SEO - {{ seo.page_name|capitalize }}</h1>
 
     <form method="POST" enctype="multipart/form-data" class="space-y-8">
         <div class="bg-white rounded-lg shadow p-6">
-            <h2 class="text-lg font-semibold mb-6">Méta-données Principales</h2>
+            <h2 class="text-lg font-semibold mb-6 flex items-center gap-2">
+                <i class="fas fa-file-alt text-blue-600"></i> Méta-données Principales
+            </h2>
             <div class="space-y-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Titre SEO <span class="text-gray-400">(55-60 caractères idéalement)</span></label>
-                    <input type="text" name="title" maxlength="200" value="{{ seo.title or '' }}" class="w-full px-4 py-2 border rounded-lg">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Titre SEO *</label>
+                    <input type="text" name="title" maxlength="200" value="{{ seo.title or '' }}" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500" placeholder="Titre de la page - 55-60 caractères idéalement">
+                    <p class="text-xs text-gray-500 mt-1">Apparaît dans les résultats Google. Incluez vos mots-clés principaux.</p>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Description <span class="text-gray-400">(150-160 caractères)</span></label>
-                    <textarea name="description" rows="3" maxlength="500" class="w-full px-4 py-2 border rounded-lg">{{ seo.description or '' }}</textarea>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Meta Description *</label>
+                    <textarea name="description" rows="3" maxlength="500" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500" placeholder="Description de la page - 150-160 caractères">{{ seo.description or '' }}</textarea>
+                    <p class="text-xs text-gray-500 mt-1">Résumé affiché sous le titre dans Google. Incitez au clic.</p>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Mots-clés <span class="text-gray-400">(séparés par des virgules)</span></label>
-                    <input type="text" name="keywords" value="{{ seo.keywords or '' }}" class="w-full px-4 py-2 border rounded-lg">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Mots-clés</label>
+                    <input type="text" name="keywords" value="{{ seo.keywords or '' }}" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500" placeholder="nettoyage marrakech, société nettoyage, ménage professionnel">
+                    <p class="text-xs text-gray-500 mt-1">Séparés par des virgules. Moins utilisé par Google mais utile pour l'organisation.</p>
                 </div>
             </div>
         </div>
 
         <div class="bg-white rounded-lg shadow p-6">
-            <h2 class="text-lg font-semibold mb-6">Paramètres Avancés</h2>
+            <h2 class="text-lg font-semibold mb-6 flex items-center gap-2">
+                <i class="fas fa-cogs text-blue-600"></i> Indexation & Contrôle
+            </h2>
             <div class="grid md:grid-cols-2 gap-6">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">URL Canonique</label>
-                    <input type="url" name="canonical_url" value="{{ seo.canonical_url or '' }}" class="w-full px-4 py-2 border rounded-lg" placeholder="https://...">
+                    <input type="url" name="canonical_url" value="{{ seo.canonical_url or '' }}" class="w-full px-4 py-2 border rounded-lg" placeholder="https://bellari.ma/...">
+                    <p class="text-xs text-gray-500 mt-1">URL préférée si contenu dupliqué. Laissez vide pour utiliser l'URL actuelle.</p>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Robots</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Directive Robots</label>
                     <select name="robots" class="w-full px-4 py-2 border rounded-lg">
-                        <option value="index, follow" {% if seo.robots == 'index, follow' %}selected{% endif %}>index, follow</option>
-                        <option value="noindex, follow" {% if seo.robots == 'noindex, follow' %}selected{% endif %}>noindex, follow</option>
+                        <option value="index, follow" {% if seo.robots == 'index, follow' or not seo.robots %}selected{% endif %}>index, follow (recommandé)</option>
+                        <option value="noindex, follow" {% if seo.robots == 'noindex, follow' %}selected{% endif %}>noindex, follow (masquer de Google)</option>
                         <option value="index, nofollow" {% if seo.robots == 'index, nofollow' %}selected{% endif %}>index, nofollow</option>
-                        <option value="noindex, nofollow" {% if seo.robots == 'noindex, nofollow' %}selected{% endif %}>noindex, nofollow</option>
+                        <option value="noindex, nofollow" {% if seo.robots == 'noindex, nofollow' %}selected{% endif %}>noindex, nofollow (bloquer totalement)</option>
                     </select>
+                    <p class="text-xs text-gray-500 mt-1">Contrôle si Google peut indexer cette page.</p>
                 </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow p-6">
+            <h2 class="text-lg font-semibold mb-6 flex items-center gap-2">
+                <i class="fas fa-share-alt text-blue-600"></i> Réseaux Sociaux (Open Graph & Twitter)
+            </h2>
+            <div class="grid md:grid-cols-2 gap-6">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Type Open Graph</label>
                     <select name="og_type" class="w-full px-4 py-2 border rounded-lg">
-                        <option value="website" {% if seo.og_type == 'website' %}selected{% endif %}>website</option>
-                        <option value="article" {% if seo.og_type == 'article' %}selected{% endif %}>article</option>
-                        <option value="product" {% if seo.og_type == 'product' %}selected{% endif %}>product</option>
+                        <option value="website" {% if seo.og_type == 'website' or not seo.og_type %}selected{% endif %}>website (page standard)</option>
+                        <option value="article" {% if seo.og_type == 'article' %}selected{% endif %}>article (blog, actualité)</option>
+                        <option value="product" {% if seo.og_type == 'product' %}selected{% endif %}>product (service, produit)</option>
+                        <option value="place" {% if seo.og_type == 'place' %}selected{% endif %}>place (lieu, entreprise locale)</option>
+                        <option value="profile" {% if seo.og_type == 'profile' %}selected{% endif %}>profile (profil)</option>
                     </select>
+                    <p class="text-xs text-gray-500 mt-1">Type de contenu pour Facebook/LinkedIn.</p>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Twitter Card</label>
                     <select name="twitter_card" class="w-full px-4 py-2 border rounded-lg">
-                        <option value="summary" {% if seo.twitter_card == 'summary' %}selected{% endif %}>summary</option>
-                        <option value="summary_large_image" {% if seo.twitter_card == 'summary_large_image' %}selected{% endif %}>summary_large_image</option>
+                        <option value="summary_large_image" {% if seo.twitter_card == 'summary_large_image' or not seo.twitter_card %}selected{% endif %}>summary_large_image (grande image)</option>
+                        <option value="summary" {% if seo.twitter_card == 'summary' %}selected{% endif %}>summary (petite vignette)</option>
                     </select>
+                    <p class="text-xs text-gray-500 mt-1">Apparence du partage sur Twitter/X.</p>
                 </div>
             </div>
             <div class="mt-6">
-                <label class="block text-sm font-medium text-gray-700 mb-2">Image de partage (OG Image)</label>
-                {% if seo.meta_image %}<img src="{{ url_for('static', filename='images/' + seo.meta_image) }}" class="h-20 mb-2 rounded">{% endif %}
+                <label class="block text-sm font-medium text-gray-700 mb-2">Image de Partage (OG Image)</label>
+                {% if seo.meta_image %}
+                <div class="mb-3">
+                    <img src="{{ url_for('static', filename='images/' + seo.meta_image) }}" class="h-24 rounded border">
+                    <p class="text-xs text-gray-500 mt-1">Image actuelle</p>
+                </div>
+                {% endif %}
                 <input type="file" name="meta_image" accept="image/*" class="w-full text-sm">
+                <p class="text-xs text-gray-500 mt-1">Taille recommandée: 1200x630px. S'affiche lors du partage sur les réseaux sociaux.</p>
             </div>
         </div>
 
         <div class="bg-white rounded-lg shadow p-6">
-            <h2 class="text-lg font-semibold mb-6">Code Personnalisé</h2>
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Données Structurées (JSON-LD)</label>
-                    <textarea name="structured_data" rows="6" class="w-full px-4 py-2 border rounded-lg font-mono text-sm" placeholder='{"@context": "https://schema.org", ...}'>{{ seo.structured_data or '' }}</textarea>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Code Head personnalisé (pour cette page)</label>
-                    <textarea name="custom_head_code" rows="4" class="w-full px-4 py-2 border rounded-lg font-mono text-sm" placeholder="<!-- Scripts spécifiques... -->">{{ seo.custom_head_code or '' }}</textarea>
-                </div>
+            <h2 class="text-lg font-semibold mb-6 flex items-center gap-2">
+                <i class="fas fa-code text-blue-600"></i> Données Structurées (Schema.org)
+            </h2>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">JSON-LD</label>
+                <textarea name="structured_data" rows="10" class="w-full px-4 py-2 border rounded-lg font-mono text-sm" placeholder='{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Bellari Propreté Services",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Marrakech",
+    "addressCountry": "MA"
+  },
+  "telephone": "+212680760352",
+  "priceRange": "$$"
+}'>{{ seo.structured_data or '' }}</textarea>
+                <p class="text-xs text-gray-500 mt-1">Aide Google à comprendre votre contenu. Utilisez <a href="https://schema.org" target="_blank" class="text-blue-600 underline">schema.org</a> pour les formats.</p>
+            </div>
+            
+            <div class="mt-6 p-4 bg-blue-50 rounded-lg">
+                <h3 class="font-medium text-blue-800 mb-2">Exemples de données structurées :</h3>
+                <ul class="text-sm text-blue-700 space-y-1">
+                    <li>• <strong>LocalBusiness</strong> : Pour votre entreprise locale</li>
+                    <li>• <strong>Service</strong> : Pour décrire vos services de nettoyage</li>
+                    <li>• <strong>FAQPage</strong> : Pour une page FAQ</li>
+                    <li>• <strong>Review</strong> : Pour les témoignages clients</li>
+                </ul>
             </div>
         </div>
 
+        <div class="bg-white rounded-lg shadow p-6">
+            <h2 class="text-lg font-semibold mb-6 flex items-center gap-2">
+                <i class="fas fa-terminal text-blue-600"></i> Code Head Personnalisé
+            </h2>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Code HTML/JS (injecté dans &lt;head&gt; de cette page)</label>
+                <textarea name="custom_head_code" rows="6" class="w-full px-4 py-2 border rounded-lg font-mono text-sm" placeholder="<!-- Exemple: pixel de tracking spécifique à cette page -->
+<script>
+  // Code JavaScript personnalisé
+</script>">{{ seo.custom_head_code or '' }}</textarea>
+                <p class="text-xs text-gray-500 mt-1">Scripts, styles ou meta tags spécifiques à cette page uniquement.</p>
+            </div>
+        </div>
+
+        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+            <h3 class="font-medium text-yellow-800 mb-2 flex items-center gap-2">
+                <i class="fas fa-lightbulb"></i> Conseils SEO pour "{{ seo.page_name }}"
+            </h3>
+            <ul class="text-sm text-yellow-700 space-y-1">
+                {% if seo.page_name == 'accueil' %}
+                <li>• Incluez "Nettoyage Marrakech" dans le titre</li>
+                <li>• Mentionnez vos services principaux dans la description</li>
+                <li>• Utilisez LocalBusiness pour les données structurées</li>
+                {% elif seo.page_name == 'services' %}
+                <li>• Listez tous vos types de nettoyage dans le titre</li>
+                <li>• Mentionnez les zones d'intervention (Marrakech)</li>
+                <li>• Utilisez Service pour les données structurées</li>
+                {% elif seo.page_name == 'contact' %}
+                <li>• Incluez votre numéro de téléphone dans la description</li>
+                <li>• Mentionnez "devis gratuit" si applicable</li>
+                <li>• Utilisez ContactPage pour les données structurées</li>
+                {% elif seo.page_name == 'devis' %}
+                <li>• Mettez en avant "devis gratuit" et "sans engagement"</li>
+                <li>• Mentionnez la rapidité de réponse</li>
+                {% else %}
+                <li>• Incluez des mots-clés pertinents pour cette page</li>
+                <li>• Rédigez une description unique et incitative</li>
+                {% endif %}
+            </ul>
+        </div>
+
         <div class="flex gap-4">
-            <button type="submit" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700">Enregistrer</button>
-            <a href="{{ url_for('admin_seo') }}" class="px-8 py-3 border border-gray-300 rounded-lg hover:bg-gray-50">Annuler</a>
+            <button type="submit" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all">
+                <i class="fas fa-save mr-2"></i> Enregistrer les paramètres SEO
+            </button>
+            <a href="{{ url_for('admin_seo') }}" class="px-8 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-all">Annuler</a>
         </div>
     </form>
 </div>
