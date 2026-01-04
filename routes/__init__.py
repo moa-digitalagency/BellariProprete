@@ -28,12 +28,14 @@ def register_routes(app):
         featured = ServiceManager.get_featured_services()
         all_services = ServiceManager.get_all_services()
         testimonials = ServiceManager.get_approved_testimonials()
-        return render_template('public/index.html', featured_services=featured, all_services=all_services, testimonials=testimonials)
+        seo = SEOSettings.query.filter_by(page_name='accueil').first()
+        return render_template('public/index.html', featured_services=featured, all_services=all_services, testimonials=testimonials, seo=seo)
 
     @app.route('/services')
     def services():
         services = ServiceManager.get_all_services()
-        return render_template('public/services.html', services=services)
+        seo = SEOSettings.query.filter_by(page_name='services').first()
+        return render_template('public/services.html', services=services, seo=seo)
 
     @app.route('/service/<int:id>')
     def service_detail(id):
@@ -52,11 +54,13 @@ def register_routes(app):
             )
             flash('Votre message a été envoyé avec succès!', 'success')
             return redirect(url_for('contact'))
-        return render_template('public/contact.html')
+        seo = SEOSettings.query.filter_by(page_name='contact').first()
+        return render_template('public/contact.html', seo=seo)
 
     @app.route('/devis')
     def devis():
-        return render_template('public/devis.html')
+        seo = SEOSettings.query.filter_by(page_name='devis').first()
+        return render_template('public/devis.html', seo=seo)
 
     @app.route('/admin/login', methods=['GET', 'POST'])
     def admin_login():

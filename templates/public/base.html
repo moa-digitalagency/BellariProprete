@@ -3,7 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Bellari Propreté Services{% endblock %}</title>
+    <title>{{ seo.title if seo and seo.title else 'Bellari Propreté Services' }}</title>
+    {% if seo and seo.description %}<meta name="description" content="{{ seo.description }}">{% endif %}
+    {% if seo and seo.keywords %}<meta name="keywords" content="{{ seo.keywords }}">{% endif %}
+    {% if seo and seo.robots %}<meta name="robots" content="{{ seo.robots }}">{% endif %}
+    {% if seo and seo.canonical_url %}<link rel="canonical" href="{{ seo.canonical_url }}">{% endif %}
+    
+    <meta property="og:title" content="{{ seo.title if seo and seo.title else 'Bellari Propreté Services' }}">
+    {% if seo and seo.description %}<meta property="og:description" content="{{ seo.description }}">{% endif %}
+    <meta property="og:type" content="{{ seo.og_type if seo and seo.og_type else 'website' }}">
+    {% if seo and seo.meta_image %}<meta property="og:image" content="{{ url_for('static', filename='images/' + seo.meta_image, _external=True) }}">{% endif %}
+    
+    <meta name="twitter:card" content="{{ seo.twitter_card if seo and seo.twitter_card else 'summary_large_image' }}">
+    <meta name="twitter:title" content="{{ seo.title if seo and seo.title else 'Bellari Propreté Services' }}">
+    {% if seo and seo.description %}<meta name="twitter:description" content="{{ seo.description }}">{% endif %}
+    {% if seo and seo.meta_image %}<meta name="twitter:image" content="{{ url_for('static', filename='images/' + seo.meta_image, _external=True) }}">{% endif %}
+    
+    {% if seo and seo.structured_data %}
+    <script type="application/ld+json">{{ seo.structured_data|safe }}</script>
+    {% endif %}
+    {% if seo and seo.custom_head_code %}{{ seo.custom_head_code|safe }}{% endif %}
+    
     {% if settings and settings.favicon %}<link rel="icon" href="{{ url_for('static', filename='images/' + settings.favicon) }}">{% endif %}
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
