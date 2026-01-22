@@ -1,6 +1,7 @@
 import os
 import uuid
-from flask import render_template, request, redirect, url_for, flash, current_app
+from datetime import datetime
+from flask import render_template, request, redirect, url_for, flash, current_app, Response, make_response
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.utils import secure_filename
 from models import db, Admin, Service, ContactMessage, Testimonial, SiteSettings, SEOSettings, SiteImage
@@ -379,3 +380,126 @@ def register_routes(app):
         db.session.commit()
         flash('Image supprimée', 'success')
         return redirect(url_for('admin_images'))
+
+    @app.route('/sitemap.xml')
+    def sitemap():
+        pages = []
+        base_url = request.url_root.rstrip('/')
+        now = datetime.now().strftime('%Y-%m-%d')
+        
+        static_pages = [
+            {'loc': '/', 'priority': '1.0', 'changefreq': 'weekly'},
+            {'loc': '/services', 'priority': '0.9', 'changefreq': 'weekly'},
+            {'loc': '/contact', 'priority': '0.8', 'changefreq': 'monthly'},
+            {'loc': '/devis', 'priority': '0.8', 'changefreq': 'monthly'},
+        ]
+        
+        for page in static_pages:
+            seo = SEOSettings.query.filter_by(page_name=page['loc'].strip('/') or 'accueil').first()
+            if seo and 'noindex' in (seo.robots or ''):
+                continue
+            pages.append({
+                'loc': base_url + page['loc'],
+                'lastmod': now,
+                'priority': page['priority'],
+                'changefreq': page['changefreq']
+            })
+        
+        services = Service.query.all()
+        for service in services:
+            pages.append({
+                'loc': f"{base_url}/service/{service.id}",
+                'lastmod': now,
+                'priority': '0.7',
+                'changefreq': 'monthly'
+            })
+        
+        xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
+        xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        for page in pages:
+            xml += '  <url>\n'
+            xml += f'    <loc>{page["loc"]}</loc>\n'
+            xml += f'    <lastmod>{page["lastmod"]}</lastmod>\n'
+            xml += f'    <changefreq>{page["changefreq"]}</changefreq>\n'
+            xml += f'    <priority>{page["priority"]}</priority>\n'
+            xml += '  </url>\n'
+        xml += '</urlset>'
+        
+        response = make_response(xml)
+        response.headers['Content-Type'] = 'application/xml'
+        return response
+
+    @app.route('/robots.txt')
+    def robots():
+        base_url = request.url_root.rstrip('/')
+        
+        robots_txt = f"""# Robots.txt pour Bellari Proprete Services
+# Genere automatiquement
+
+# Regles pour tous les robots
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /admin/*
+
+# Autoriser les moteurs de recherche classiques
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+# Autoriser les robots IA
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: Anthropic-AI
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Cohere-ai
+Allow: /
+
+# Bloquer les scrapers agressifs
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+# Sitemap
+Sitemap: {base_url}/sitemap.xml
+"""
+        
+        response = make_response(robots_txt)
+        response.headers['Content-Type'] = 'text/plain'
+        return response
